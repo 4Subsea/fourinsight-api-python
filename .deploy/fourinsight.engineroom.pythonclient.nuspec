@@ -1,0 +1,17 @@
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>fourinsight.engineroom.pythonclient</id>
+    <version>$version$</version>
+    <authors>4Subsea Team</authors>
+    <owners>4Subsea AS</owners>
+    <licenseUrl>http://4subsea.com</licenseUrl>
+    <projectUrl>http://4subsea.com</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>4Insight EngineRoom python library</description>
+  </metadata>
+  <files>
+    <file src="Deploy.ps1" />
+    <file src="*.whl" />
+    <file src="docs\**\*.*" target="docs" />
+  </files>
+</package>
