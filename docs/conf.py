@@ -133,7 +133,7 @@ html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 # documentation.
 html_theme_options = {
     # Navigation bar title. (Default: ``project`` value)
-    "navbar_title": "4insight.io - Data Analytics EngineRoom",
+    "navbar_title": "4insight.io - Python API",
     # Tab name for entire site. (Default: "Site")
     "navbar_site_name": "Content",
     # A list of tuples containing pages or urls to link to.

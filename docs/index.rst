@@ -1,12 +1,11 @@
-4insight Python API Python Documentation
+.. include:: ../README.rst
 
-This is a header
-----------------
-This is some text.
+Contents
+========
 
-How to use
-----------
+.. toctree::
+   :glob:
+   :titlesonly:
+   :maxdepth: 2
 
-Try ::
-
-    python -m fourinsight.api init James
+   getting_started
