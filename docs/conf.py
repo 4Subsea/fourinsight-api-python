@@ -62,7 +62,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"fourinsight-engineroom"
+project = u"fourinsight-api"
 copyright = u"{}, 4Subsea".format(date.today().year)
 author = u"4Subsea"
 
