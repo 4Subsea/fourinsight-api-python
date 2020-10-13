@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name="fourinsight_engineroom",
+    name="fourinsight_api",
     version="0.0.1",
-    description="Supercharge your EngineRoom App",
+    description="4insight Python API",
     author="4Subsea",
     author_email="support@4subsea.com",
     url="https://4insight.io/",
-    packages=["fourinsight.engineroom"],
-    install_requires=["click"],
+    packages=["fourinsight.api"],
+    install_requires=[],
     zip_safe=False,
 )
