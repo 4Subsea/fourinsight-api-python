@@ -8,6 +8,6 @@ setup(
     author_email="support@4subsea.com",
     url="https://4insight.io/",
     packages=["fourinsight.api"],
-    install_requires=[],
+    # install_requires=[],
     zip_safe=False,
 )

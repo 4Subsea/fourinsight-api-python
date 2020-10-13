@@ -1,5 +1,5 @@
 4insight Python API Python Documentation
-===============================
+========================================
 
 This is a header
 ----------------
