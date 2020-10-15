@@ -13,13 +13,6 @@ from .appdirs import user_data_dir
 from .globalsettings import environment
 
 
-# class UserSession:
-#     pass
-
-# class ClientSession:
-#     pass
-
-
 class TokenCache:
     def __init__(self, session_key=None):
         self._session_key = f".{session_key}" if session_key else ""
@@ -41,7 +34,7 @@ class TokenCache:
 
     @property
     def _token_root(self):
-        return user_data_dir("4insight-api")
+        return user_data_dir("4insight")
 
     @property
     def token_path(self):
