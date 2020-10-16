@@ -130,7 +130,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
 
 class UserSession(BaseAuthSession):
     """
-    Authorized session where credentials are given in the DataReservoir.io web
+    Authorized session where credentials are given in the 4insight.io web
     application. When a valid code is presented, the session is authenticated
     and persisted. A previous session will be reused as long as it is not
     expired. When required, a new authentication code is prompted for.
