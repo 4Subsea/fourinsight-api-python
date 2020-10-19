@@ -5,7 +5,7 @@ ENV_QA = "QA"
 ENV_PROD = "PROD"
 
 API_BASE_URL_DEV = "http://localhost:5824/api/"
-API_BASE_URL_TEST = "https://reservoir-api-test.4subsea.net/api/"
+API_BASE_URL_TEST = "https://4insight-api-test.4subsea.net"
 API_BASE_URL_QA = "https://reservoir-api-qa.4subsea.net/api/"
 API_BASE_URL_PROD = "https://reservoir-api.4subsea.net/api/"
 
@@ -52,22 +52,20 @@ AUTHORITY_URL_PROD_USER = "https://reservoir-api.4subsea.net/account"   # not co
 
 
 # CLIENT   # not correct
-TOKEN_URL_DEV_CLIENT = (
-    "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token"
-)
-SCOPE_DEV_CLIENT = ["https://4subseaid.onmicrosoft.com/reservoir-dev/.default"]
+TOKEN_URL_DEV_CLIENT = None
+SCOPE_DEV_CLIENT = None
 
 TOKEN_URL_TEST_CLIENT = (
     "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token"
 )
-SCOPE_TEST_CLIENT = ["https://4subseaid.onmicrosoft.com/reservoir-test/access_api"]
+SCOPE_TEST_CLIENT = ["https://4subseaid.onmicrosoft.com/4insight-api-test/.default"]
 
 TOKEN_URL_QA_CLIENT = (
     "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token"
 )
-SCOPE_QA_CLIENT = ["https://4subseaid.onmicrosoft.com/reservoir-qa/.default"]
+SCOPE_QA_CLIENT = ["https://4subseaid.onmicrosoft.com/4insight-api-qa/.default"]
 
 TOKEN_URL_PROD_CLIENT = (
     "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token"
 )
-SCOPE_PROD_CLIENT = ["https://4subseaid.onmicrosoft.com/reservoir-prod/.default"]
+SCOPE_PROD_CLIENT = ["https://4subseaid.onmicrosoft.com/4insight-api-prod/.default"]
