@@ -6,8 +6,8 @@ ENV_PROD = "PROD"
 
 API_BASE_URL_DEV = "http://localhost:5824/api/"
 API_BASE_URL_TEST = "https://4insight-api-test.4subsea.net"
-API_BASE_URL_QA = "https://reservoir-api-qa.4subsea.net/api/"
-API_BASE_URL_PROD = "https://reservoir-api.4subsea.net/api/"
+API_BASE_URL_QA = "https://4insight-api-qa.4subsea.net"
+API_BASE_URL_PROD = "https://api.4insight.io"
 
 
 # USER (B2C - NOT REALLY SECRETS...)
