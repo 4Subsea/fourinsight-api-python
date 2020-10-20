@@ -44,12 +44,18 @@ class CampaignsAPI:
         return self._get(self._get_base_url() + "/v1.0/Campaigns/Type/Campaign").json()
 
     def get_campaigns(self, campaign_type=None):
-        """Campaign list.
+        """
+        Get list of campaigns.
 
         Parameters
         ----------
         campaign_type : str
             Campaign type ['Campaign', 'SWIM Campaign'].
+
+        Returns
+        -------
+        list of dicts
+            A list of campaign dicts.
         """
         if not campaign_type:
             return self._get(self._get_base_url() + "/v1.0/Campaigns").json()
@@ -61,35 +67,102 @@ class CampaignsAPI:
             return self._get_generic_campaigns()
 
     def get_campaign(self, campaign_id):
-        """Campaign dict"""
+        """
+        Get campaign.
+
+        Parameters
+        ----------
+        campaign_id : str
+            Campaign ID
+
+        Returns
+        -------
+        dict
+            Campaign metadata.
+        """
         return self._get(self._get_base_url() + f"/v1.0/Campaigns/{campaign_id}").json()
 
     def get_events(self, campaign_id):
-        """Events dict"""
+        """
+        Get events.
+
+        Parameters
+        ----------
+        campaign_id : str
+            Campaign ID
+
+        Returns
+        -------
+        dict
+            Events
+        """
         return self._get(
             self._get_base_url() + f"/v1.0/Campaigns/{campaign_id}/Events"
         ).json()
 
     def get_sensors(self, campaign_id):
-        """Sensors dict"""
+        """
+        Get sensors.
+
+        Parameters
+        ----------
+        campaign_id : str
+            Campaign ID
+
+        Returns
+        -------
+        dict
+            Sensor metadata.
+        """
         return self._get(
             self._get_base_url() + f"/v1.0/Campaigns/{campaign_id}/Sensors"
         ).json()
 
     def get_lowerstack(self, campaign_id):
-        """Lower Stack dict"""
+        """
+        Get lower stack.
+
+        Parameters
+        ----------
+        campaign_id : str
+            Campaign ID
+
+        Returns
+        -------
+        dict
+            Lower stack metadata.
+        """
         return self._get(
             self._get_base_url() + f"/v1.0/Campaigns/{campaign_id}/LowerStack"
         ).json()
 
     def get_swimops_campaign(self, campaign_id):
-        """SWIM operations for campaign."""
+        """
+        Get SWIM operations for campaign.
+
+        Parameters
+        ----------
+        campaign_id : str
+            Campaign ID
+
+        Returns
+        -------
+        dict
+            Swim operations.
+        """
         return self._get(
             self._get_base_url() + f"/v1.0/Campaigns/{campaign_id}/Swimops"
         ).json()
 
     def get_swimops(self):
-        """SWIM operations list"""
+        """
+        Get SWIM operations.
+
+        Returns
+        -------
+        list of dicts
+            A list of swim operations.
+        """
         return self._get(self._get_base_url() + f"/v1.0/Campaigns/Swimops").json()
 
     # def get_campaign_type(self, campaign_id):
