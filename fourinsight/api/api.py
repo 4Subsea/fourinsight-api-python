@@ -33,7 +33,7 @@ class CampaignsAPI:
         if campaign_type in _CAMPAIGN_TYPES:
             return campaign_type
         else:
-            raise ValueError("Campaign type {campaign_type} not supported.")
+            raise ValueError(f"Campaign type {campaign_type} not supported.")
 
     def _get_swim_campaigns(self):
         return self._get(
