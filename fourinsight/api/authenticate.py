@@ -160,6 +160,7 @@ class UserSession(BaseAuthSession):
 
     def __init__(self, auth_force=False, session_key=None):
         self._env = environment.current_environment
+        self._api_base_url = environment.api_base_url
 
         token_cache = TokenCache(session_key=session_key)
         token = token_cache.token
