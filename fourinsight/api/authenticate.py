@@ -5,6 +5,7 @@ from abc import ABCMeta, abstractmethod
 from oauthlib.oauth2 import (
     WebApplicationClient,
     BackendApplicationClient,
+    InvalidGrantError,
 )
 from requests_oauthlib import OAuth2Session
 
@@ -255,4 +256,3 @@ class ClientSession(BaseAuthSession):
         """Refresh (expired) access token"""
         token = self.fetch_token()
         return token
-
