@@ -37,11 +37,11 @@ class CampaignsAPI:
 
     def _get_swim_campaigns(self):
         return self._get(
-            self._get_base_url() + f"/v1.0/Campaigns/Type/SWIM Campaign"
+            self._get_base_url() + "/v1.0/Campaigns/Type/SWIM Campaign"
         ).json()
 
     def _get_generic_campaigns(self):
-        return self._get(self._get_base_url() + f"/v1.0/Campaigns/Type/Campaign").json()
+        return self._get(self._get_base_url() + "/v1.0/Campaigns/Type/Campaign").json()
 
     def get_campaigns(self, campaign_type=None):
         """Campaign list.
