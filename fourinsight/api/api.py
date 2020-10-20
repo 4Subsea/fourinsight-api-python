@@ -49,8 +49,9 @@ class CampaignsAPI:
 
         Parameters
         ----------
-        campaign_type : str
-            Campaign type ['Campaign', 'SWIM Campaign'].
+        campaign_type : str, optional
+            Campaign type ['Campaign', 'SWIM Campaign']. If None, all campaign
+            types are returned.
 
         Returns
         -------
@@ -163,7 +164,7 @@ class CampaignsAPI:
         list of dicts
             A list of swim operations.
         """
-        return self._get(self._get_base_url() + f"/v1.0/Campaigns/Swimops").json()
+        return self._get(self._get_base_url() + "/v1.0/Campaigns/Swimops").json()
 
     # def get_campaign_type(self, campaign_id):
     #     return self.get_campaign(campaign_id)["campaignType"]
