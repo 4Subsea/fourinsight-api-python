@@ -1,8 +1,8 @@
 Development using ``fourinsight.api``
 =====================================
 
-It may be helpful to redirect the API calls to development backend. This can be
-achieved by reconfiguring the API parameters on run-time::
+It may be helpful to redirect the API calls to a development backend during development.
+This can be achieved by reconfiguring the API parameters on run-time::
 
     import fourinsight.api as fapi
 
