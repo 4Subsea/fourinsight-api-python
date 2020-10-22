@@ -1,0 +1,8 @@
+{
+    "API_BASE_URL": "https://4insight-api-test.4subsea.net",
+    "USER_CLIENT_ID": "9176603a-f0e9-45ca-a615-15d8eb35d9d3",
+    "USER_CLIENT_SECRET": "vNIY8No17yF7gV.GN8mDou22gn.nZ_B.j3",
+    "USER_AUTHORITY_URL": "https://fourinsight-api-test.azurewebsites.net/",
+    "CLIENT_TOKEN_URL": "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token",
+    "CLIENT_SCOPE": ["https://4subseaid.onmicrosoft.com/4insight-api-test/.default"]
+}
