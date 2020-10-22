@@ -39,4 +39,4 @@ def user_data_dir(module_name=None):
 
     if module_name:
         path = os.path.join(path, module_name)
-    return path
+    return os.path.normpath(path)
