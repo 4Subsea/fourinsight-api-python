@@ -11,6 +11,7 @@ setup(
     install_requires=[
         "oauthlib",
         "requests-oauthlib",
+        "importlib_resources"
     ],
     zip_safe=False,
 )

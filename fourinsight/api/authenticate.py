@@ -1,7 +1,11 @@
 import os
 import json
 from abc import ABCMeta, abstractmethod
-from importlib.resources import read_text
+
+try:
+    from importlib.resources import read_text
+except ImportError:
+    from importlib_resources import read_text
 
 from oauthlib.oauth2 import (
     WebApplicationClient,
