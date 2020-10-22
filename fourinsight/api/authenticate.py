@@ -18,7 +18,7 @@ _CONSTANTS = json.loads(read_text("fourinsight.api", "_constants.json"))
 
 class TokenCache:
     def __init__(self, session_key=None):
-        self._session_key = f".{session_key}" if session_key else ""
+        self._session_key = session_key
 
         if not os.path.exists(self._token_root):
             os.makedirs(self._token_root)
@@ -41,9 +41,9 @@ class TokenCache:
 
     @property
     def token_path(self):
-        return os.path.join(
-            self._token_root, f"token.{self._session_key}"
-        )
+        if self._session_key is not None:
+            return os.path.join(self._token_root, f"token.{self._session_key}")
+        return os.path.join(self._token_root, "token")
 
     def dump(self, token):
         self._token.update(token)
