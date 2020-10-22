@@ -1,14 +1,8 @@
 import json
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
-
 from fourinsight.api import authenticate
-
-
-def setup_module():
-    pass
-#     environment.set_test()
 
 _CONSTANTS = authenticate._CONSTANTS
 
