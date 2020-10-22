@@ -46,7 +46,7 @@ class Test_TokenCache:
         token_root = token_cache._token_root
 
         assert token_root == "my_dir"
-        mock_cache_dir.assert_called_with("4insight")
+        mock_cache_dir.assert_called_with("api")
 
     def test_token_path(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"

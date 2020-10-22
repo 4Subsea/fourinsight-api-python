@@ -37,7 +37,7 @@ class TokenCache:
 
     @property
     def _token_root(self):
-        return user_data_dir("4insight")
+        return user_data_dir("api")
 
     @property
     def token_path(self):
