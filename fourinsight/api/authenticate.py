@@ -1,7 +1,7 @@
 import os
 import json
 from abc import ABCMeta, abstractmethod
-from pathlib import Path
+from importlib.resources import read_text
 
 from oauthlib.oauth2 import (
     WebApplicationClient,
@@ -13,8 +13,7 @@ from requests_oauthlib import OAuth2Session
 from .appdirs import user_data_dir
 
 
-with open(Path(__file__).parent / "_constants.json") as f:
-    _CONSTANTS = json.load(f)
+_CONSTANTS = json.loads(read_text("fourinsight.api", "_constants.json"))
 
 
 class TokenCache:
