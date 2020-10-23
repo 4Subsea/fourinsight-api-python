@@ -1,14 +1,10 @@
 import json
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
+from fourinsight.api import authenticate
 
-from fourinsight.api import _constants, authenticate
-from fourinsight.api.globalsettings import environment
-
-
-def setup_module():
-    environment.set_test()
+_CONSTANTS = authenticate._CONSTANTS
 
 
 @patch("fourinsight.api.authenticate.user_data_dir")
@@ -36,7 +32,7 @@ class Test_TokenCache:
         mock_cache_dir.return_value = cache_dir
         cache_dir.mkdir()
 
-        cache_path = cache_dir / f"token.{environment.get()}"
+        cache_path = cache_dir / "token"
 
         with open(cache_path, "w") as f:
             json.dump({"access_token": "123abc"}, f)
@@ -50,14 +46,14 @@ class Test_TokenCache:
         token_root = token_cache._token_root
 
         assert token_root == "my_dir"
-        mock_cache_dir.assert_called_with("4insight")
+        mock_cache_dir.assert_called_with("api")
 
     def test_token_path(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"
         mock_cache_dir.return_value = cache_dir
         cache_dir.mkdir()
 
-        cache_path = cache_dir / f"token.{environment.get()}"
+        cache_path = cache_dir / "token"
 
         token_cache = authenticate.TokenCache()
         assert token_cache.token_path == str(cache_path)
@@ -68,7 +64,7 @@ class Test_TokenCache:
         cache_dir.mkdir()
 
         session_key = "my_session_key"
-        cache_path = cache_dir / f"token.{environment.get()}.{session_key}"
+        cache_path = cache_dir / f"token.{session_key}"
 
         token_cache = authenticate.TokenCache(session_key=session_key)
         assert token_cache.token_path == str(cache_path)
@@ -101,7 +97,7 @@ class Test_TokenCache:
         cache_dir.mkdir()
 
         session_key = "my_session_key"
-        cache_path = cache_dir / f"token.{environment.get()}.{session_key}"
+        cache_path = cache_dir / f"token.{session_key}"
 
         token_cache = authenticate.TokenCache(session_key=session_key)
 
@@ -118,7 +114,7 @@ class Test_TokenCache:
         mock_cache_dir.return_value = cache_dir
         cache_dir.mkdir()
 
-        cache_path = cache_dir / f"token.{environment.get()}"
+        cache_path = cache_dir / "token"
 
         token_cache = authenticate.TokenCache()
 
@@ -135,7 +131,7 @@ class Test_TokenCache:
         mock_cache_dir.return_value = cache_dir
         cache_dir.mkdir()
 
-        cache_path = cache_dir / f"token.{environment.get()}"
+        cache_path = cache_dir / f"token"
 
         token_cache = authenticate.TokenCache()
         token_cache.append("new_key", "new_value")
@@ -166,12 +162,12 @@ class Test_ClientSession:
         auth = authenticate.ClientSession("my_client_id", "my_client_secret")
 
         mock_fetch.assert_called_once_with(
-            _constants.TOKEN_URL_TEST_CLIENT,
+            _CONSTANTS["CLIENT_TOKEN_URL"],
             client_secret="my_client_secret",
-            scope=_constants.SCOPE_TEST_CLIENT,
+            scope=_CONSTANTS["CLIENT_SCOPE"],
             include_client_id=True,
         )
-        assert auth.auto_refresh_url == _constants.TOKEN_URL_TEST_CLIENT
+        assert auth.auto_refresh_url == _CONSTANTS["CLIENT_TOKEN_URL"]
 
     def test_refresh_token(self, mock_fetch, mock_refresh):
         auth = authenticate.ClientSession("my_client_id", "my_client_secret")
@@ -188,10 +184,10 @@ class Test_ClientSession:
 
         args, kwargs = auth._prepare_fetch_token_args()
 
-        args_expected = (_constants.TOKEN_URL_TEST_CLIENT,)
+        args_expected = (_CONSTANTS["CLIENT_TOKEN_URL"],)
         kwargs_expected = {
             "client_secret": "my_client_secret",
-            "scope": _constants.SCOPE_TEST_CLIENT,
+            "scope": _CONSTANTS["CLIENT_SCOPE"],
             "include_client_id": True,
         }
 
@@ -204,9 +200,9 @@ class Test_ClientSession:
         auth.fetch_token()
 
         mock_fetch.assert_called_with(
-            _constants.TOKEN_URL_TEST_CLIENT,
+            _CONSTANTS["CLIENT_TOKEN_URL"],
             client_secret="my_client_secret",
-            scope=_constants.SCOPE_TEST_CLIENT,
+            scope=_CONSTANTS["CLIENT_SCOPE"],
             include_client_id=True,
         )
 
@@ -223,7 +219,7 @@ class Test_UserSession:
                 ("my_token_url",),
                 {
                     "code": "my_code",
-                    "client_secret": _constants.CLIENT_SECRET_TEST_USER,
+                    "client_secret": _CONSTANTS["USER_CLIENT_SECRET"],
                 },
             )
 
@@ -232,7 +228,7 @@ class Test_UserSession:
             mock_fetch.assert_called_once_with(
                 "my_token_url",
                 code="my_code",
-                client_secret=_constants.CLIENT_SECRET_TEST_USER,
+                client_secret=_CONSTANTS["USER_CLIENT_SECRET"],
             )
         mock_token.assert_called()
         auth.token_updater.assert_called()
@@ -245,7 +241,7 @@ class Test_UserSession:
                 ("my_token_url",),
                 {
                     "code": "my_code",
-                    "client_secret": _constants.CLIENT_SECRET_TEST_USER,
+                    "client_secret": _CONSTANTS["USER_CLIENT_SECRET"],
                 },
             )
 
@@ -262,7 +258,7 @@ class Test_UserSession:
                 ("my_token_url",),
                 {
                     "code": "my_code",
-                    "client_secret": _constants.CLIENT_SECRET_TEST_USER,
+                    "client_secret": _CONSTANTS["USER_CLIENT_SECRET"],
                 },
             )
 
@@ -275,7 +271,7 @@ class Test_UserSession:
             mock_fetch.assert_called_once_with(
                 "my_token_url",
                 code="my_code",
-                client_secret=_constants.CLIENT_SECRET_TEST_USER,
+                client_secret=_CONSTANTS["USER_CLIENT_SECRET"],
             )
 
     def test_init_force_auth_false_token_valid(
@@ -294,7 +290,7 @@ class Test_UserSession:
         mock_refresh.assert_called_once_with(
             "my_token_url",
             refresh_token="my_refresh_token",
-            client_secret=_constants.CLIENT_SECRET_TEST_USER,
+            client_secret=_CONSTANTS["USER_CLIENT_SECRET"],
         )
 
         assert auth.token == token_cache.token
@@ -316,7 +312,7 @@ class Test_UserSession:
         assert args == ("my_token_url",)
         assert kwargs == {
             "refresh_token": "my_refresh_token",
-            "client_secret": _constants.CLIENT_SECRET_TEST_USER,
+            "client_secret": _CONSTANTS["USER_CLIENT_SECRET"],
         }
 
     def test_refesh_token(self, mock_token, mock_fetch, mock_refresh):
@@ -335,7 +331,7 @@ class Test_UserSession:
         mock_refresh.assert_called_with(
             "my_token_url",
             refresh_token="my_refresh_token",
-            client_secret=_constants.CLIENT_SECRET_TEST_USER,
+            client_secret=_CONSTANTS["USER_CLIENT_SECRET"],
         )
         assert mock_refresh.call_count == 2
 
@@ -347,7 +343,7 @@ class Test_UserSession:
                 ("my_token_url",),
                 {
                     "code": "my_code",
-                    "client_secret": _constants.CLIENT_SECRET_TEST_USER,
+                    "client_secret": _CONSTANTS["USER_CLIENT_SECRET"],
                 },
             )
 
@@ -357,7 +353,7 @@ class Test_UserSession:
         mock_fetch.assert_called_with(
             "my_token_url",
             code="my_code",
-            client_secret=_constants.CLIENT_SECRET_TEST_USER,
+            client_secret=_CONSTANTS["USER_CLIENT_SECRET"],
         )
         assert mock_fetch.call_count == 2
 
@@ -379,7 +375,7 @@ class Test_UserSession:
         assert args == ("https://token-endpoint.com",)
         assert kwargs == {
             "code": "abc321",
-            "client_secret": _constants.CLIENT_SECRET_TEST_USER,
+            "client_secret": _CONSTANTS["USER_CLIENT_SECRET"],
         }
 
 

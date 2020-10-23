@@ -2,6 +2,11 @@ import os
 import json
 from abc import ABCMeta, abstractmethod
 
+try:
+    from importlib.resources import read_text
+except ImportError:
+    from importlib_resources import read_text
+
 from oauthlib.oauth2 import (
     WebApplicationClient,
     BackendApplicationClient,
@@ -9,14 +14,15 @@ from oauthlib.oauth2 import (
 )
 from requests_oauthlib import OAuth2Session
 
-from . import _constants  # only TEST env valid for now
 from .appdirs import user_data_dir
-from .globalsettings import environment
+
+
+_CONSTANTS = json.loads(read_text("fourinsight.api", "_constants.json"))
 
 
 class TokenCache:
     def __init__(self, session_key=None):
-        self._session_key = f".{session_key}" if session_key else ""
+        self._session_key = session_key
 
         if not os.path.exists(self._token_root):
             os.makedirs(self._token_root)
@@ -35,13 +41,13 @@ class TokenCache:
 
     @property
     def _token_root(self):
-        return user_data_dir("4insight")
+        return user_data_dir("api")
 
     @property
     def token_path(self):
-        return os.path.join(
-            self._token_root, f"token.{environment.get()}{self._session_key}"
-        )
+        if self._session_key is not None:
+            return os.path.join(self._token_root, f"token.{self._session_key}")
+        return os.path.join(self._token_root, "token")
 
     def dump(self, token):
         self._token.update(token)
@@ -160,8 +166,10 @@ class UserSession(BaseAuthSession):
     """
 
     def __init__(self, auth_force=False, session_key=None):
-        self._env = environment.current_environment
-        self._api_base_url = environment.api_base_url
+        self._api_base_url = _CONSTANTS["API_BASE_URL"]
+        self._client_id = _CONSTANTS["USER_CLIENT_ID"]
+        self._client_secret = _CONSTANTS["USER_CLIENT_SECRET"]
+        self._authority_url = _CONSTANTS["USER_AUTHORITY_URL"]
 
         token_cache = TokenCache(session_key=session_key)
         token = token_cache.token
@@ -171,7 +179,7 @@ class UserSession(BaseAuthSession):
         else:
             self._token_url = None
 
-        client = WebApplicationClient(eval(f"_constants.CLIENT_ID_{self._env}_USER"))
+        client = WebApplicationClient(self._client_id)
         super().__init__(
             client,
             auth_force=auth_force,
@@ -183,7 +191,7 @@ class UserSession(BaseAuthSession):
     def _prepare_fetch_token_args(self):
         print(
             "Please go here and authorize,",
-            eval(f"_constants.AUTHORITY_URL_{self._env}_USER"),
+            self._authority_url,
         )
         package = input("Paste code here: ")
         parameters = json.loads(package)
@@ -197,7 +205,7 @@ class UserSession(BaseAuthSession):
         args = (self._token_url,)
         kwargs = {
             "code": code,
-            "client_secret": eval(f"_constants.CLIENT_SECRET_{self._env}_USER"),
+            "client_secret": self._client_secret,
         }
         return args, kwargs
 
@@ -205,7 +213,7 @@ class UserSession(BaseAuthSession):
         args = (self._token_url,)
         kwargs = {
             "refresh_token": self.token["refresh_token"],
-            "client_secret": eval(f"_constants.CLIENT_SECRET_{self._env}_USER"),
+            "client_secret": self._client_secret,
         }
         return args, kwargs
 
@@ -228,23 +236,25 @@ class ClientSession(BaseAuthSession):
     """
 
     def __init__(self, client_id, client_secret):
-        self._env = environment.current_environment
+        self._client_id = client_id
         self._client_secret = client_secret
+        self._token_url = _CONSTANTS["CLIENT_TOKEN_URL"]
+        self._scope = _CONSTANTS["CLIENT_SCOPE"]
 
-        client = BackendApplicationClient(client_id)
+        client = BackendApplicationClient(self._client_id)
         super().__init__(
             client,
             auth_force=True,
-            auto_refresh_url=eval(f"_constants.TOKEN_URL_{self._env}_CLIENT"),
+            auto_refresh_url=self._token_url,
             # unable to supress TokenUpdated expection without this dummy updater
             token_updater=lambda token: None,
         )
 
     def _prepare_fetch_token_args(self):
-        args = (eval(f"_constants.TOKEN_URL_{self._env}_CLIENT"),)
+        args = (self._token_url, )
         kwargs = {
             "client_secret": self._client_secret,
-            "scope": eval(f"_constants.SCOPE_{self._env}_CLIENT"),
+            "scope": self._scope,
             "include_client_id": True,
         }
         return args, kwargs
