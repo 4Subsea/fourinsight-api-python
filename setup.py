@@ -13,6 +13,8 @@ setup(
         "requests-oauthlib",
         "importlib_resources"
     ],
-    include_package_data=True,
+    package_data={
+        "fourinsight.api": ["_constants.json"],
+    },
     zip_safe=False,
 )
