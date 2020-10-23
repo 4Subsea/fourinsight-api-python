@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 from abc import ABCMeta, abstractmethod
 
 try:
@@ -16,6 +17,8 @@ from requests_oauthlib import OAuth2Session
 
 from .appdirs import user_data_dir
 
+
+log = logging.getLogger(__name__)
 
 _CONSTANTS = json.loads(read_text("fourinsight.api", "_constants.json"))
 
@@ -95,8 +98,10 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
             try:
                 token = self.refresh_token()
             except (KeyError, ValueError, InvalidGrantError):
+                log.debug("not able to refresh token")
                 token = self.fetch_token()
             else:
+                log.debug("token in cache still valid")
                 print("Authentication from previous session still valid.")
 
         if self.token_updater:
@@ -105,12 +110,14 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
     def fetch_token(self):
         """Fetch new access and refresh token."""
         args, kwargs = self._prepare_fetch_token_args()
+        log.debug("fetch token with args: %s kwargs: %s", args, kwargs)
         token = super().fetch_token(*args, **kwargs)
         return token
 
     def refresh_token(self, *args, **kwargs):
         """Refresh (expired) access token with a valid refresh token."""
         args, kwargs = self._prepare_refresh_token_args()
+        log.debug("refresh token with args: %s kwargs: %s", args, kwargs)
         token = super().refresh_token(*args, **kwargs)
         return token
 
