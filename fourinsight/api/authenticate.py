@@ -141,16 +141,6 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         kwargs = {}
         return args, kwargs
 
-    def get_rename_dict(self, url, key_map, **kwargs):
-        response = super().get(url, **kwargs)
-        response.raise_for_status()
-
-        old_dict = response.json()
-        new_dict = {}
-        for old_key, new_key in key_map.items():
-            new_dict[new_key] = old_dict[old_key]
-        return new_dict
-
 
 class UserSession(BaseAuthSession):
     """
