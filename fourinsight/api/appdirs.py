@@ -6,7 +6,7 @@ import sys
 import os
 
 
-if sys.platform.startswith("java"):
+if sys.platform.startswith("java"):  # pragma: no cover
     import platform
 
     os_name = platform.java_ver()[3][0]
