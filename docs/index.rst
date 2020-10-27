@@ -9,3 +9,8 @@ Contents
    :maxdepth: 2
 
    getting_started
+   basic_usage
+   logging
+   api
+   developer
+   support

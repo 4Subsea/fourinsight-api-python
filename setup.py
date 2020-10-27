@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name="fourinsight_api",
+    name="fourinsight-api",
     version="0.0.1",
     description="4insight Python API",
     author="4Subsea",
