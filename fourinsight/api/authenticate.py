@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 _CONSTANTS = json.loads(read_text("fourinsight.api", "_constants.json"))
 
 
-def _response_logger(func):
+def _request_logger(func):
     @wraps(func)
     def func_wrapper(*args, **kwargs):
         log.debug("request initiated")
@@ -172,6 +172,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         kwargs = {}
         return args, kwargs
 
+    @_request_logger
     def request(self, *args, **kwargs):
         """
         Extend the ``requests_oauthlib.OAuth2Session.request" method to
