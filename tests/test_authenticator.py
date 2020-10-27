@@ -1,4 +1,6 @@
 import json
+import logging
+from io import StringIO
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -463,6 +465,22 @@ class Test_BaseAuthSession:
         mock_request.assert_called_with(
             "GET", args[0], allow_redirects=True, **auth._defaults
         )
+
+    @patch("fourinsight.api.authenticate.OAuth2Session.request")
+    def test_request_logger(self, mock_request, mock_fetch, mock_refresh):
+        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
+        args = ("https://v1.0/ding/dong",)
+
+        log = logging.getLogger("fourinsight.api")
+        log.setLevel("DEBUG")
+        stream = StringIO()
+
+        log.addHandler(logging.StreamHandler(stream))
+
+        auth.get(*args)
+        stream.seek(0)
+        log_out = stream.read()
+        assert log_out.startswith("request initiated")
 
 
 if __name__ == "__main__":
