@@ -396,6 +396,17 @@ class Test_BaseAuthSession:
         with pytest.raises(KeyError):
             auth._update_args_kwargs(args, kwargs)
 
+    def test_update_args_kwargs_args_none(self, mock_fetch, mock_refresh):
+        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
+
+        args = ()
+        kwargs = {"method": "GET", "url": "/v1.0/ding/dong", "other": "thing"}
+
+        args_out, kwargs_out = auth._update_args_kwargs(args, kwargs)
+
+        assert args + ("GET", auth._api_base_url + "/v1.0/ding/dong",) == args_out
+        assert {"timeout": auth._defaults["timeout"], "other": "thing"} == kwargs_out
+
     def test_update_args_kwargs_args_len_1(self, mock_fetch, mock_refresh):
         auth = authenticate.ClientSession("my_client_id", "my_client_secret")
 
