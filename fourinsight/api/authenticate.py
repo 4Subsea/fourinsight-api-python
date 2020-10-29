@@ -1,26 +1,43 @@
-import os
 import json
 import logging
+import os
 from abc import ABCMeta, abstractmethod
+from functools import wraps
 
 try:
     from importlib.resources import read_text
 except ImportError:
     from importlib_resources import read_text
 
-from oauthlib.oauth2 import (
-    WebApplicationClient,
-    BackendApplicationClient,
-    InvalidGrantError,
-)
+from oauthlib.oauth2 import (BackendApplicationClient, InvalidGrantError,
+                             WebApplicationClient)
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
 
 from .appdirs import user_data_dir
 
-
 log = logging.getLogger(__name__)
 
 _CONSTANTS = json.loads(read_text("fourinsight.api", "_constants.json"))
+
+
+def _request_logger(func):
+    @wraps(func)
+    def func_wrapper(*args, **kwargs):
+        log.debug("request initiated")
+        response = func(*args, **kwargs)
+        log.debug("response recieved")
+
+        log.debug("request url: %s", response.request.url)
+        log.debug("status code: %s", response.status_code)
+        try:
+            log.debug("response text: %s", response.text)
+        except ValueError:
+            log.debug("response text: failed encoding")
+        return response
+
+    return func_wrapper
 
 
 class TokenCache:
@@ -87,10 +104,24 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
     """
 
     def __init__(self, client, auth_force=False, **kwargs):
-        super().__init__(
-            client=client,
-            **kwargs,
+        super().__init__(client=client, **kwargs)
+        self._api_base_url = _CONSTANTS["API_BASE_URL"]
+
+        # Attention: Be careful when extending the list of retry_status!
+        retry_status = frozenset([413, 429, 502, 503, 504])
+        method_allow = frozenset(
+            ["GET", "POST", "PUT", "PATCH", "DELETE"]
         )
+
+        persist = Retry(
+            total=3,
+            backoff_factor=0.5,
+            method_whitelist=method_allow,
+            status_forcelist=retry_status,
+            raise_on_status=False,
+        )
+        self.mount(self._api_base_url, HTTPAdapter(max_retries=persist))
+        self._defaults = {"timeout": 10.0}
 
         if auth_force or not self.token:
             token = self.fetch_token()
@@ -141,6 +172,38 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         kwargs = {}
         return args, kwargs
 
+    @_request_logger
+    def request(self, *args, **kwargs):
+        """
+        Extend the ``requests_oauthlib.OAuth2Session.request" method to
+        allow relative urls and supply default arguments.
+        """
+        args, kwargs = self._update_args_kwargs(args, kwargs)
+
+        response = super().request(*args, **kwargs)
+        response.raise_for_status()
+        return response
+
+    def _update_args_kwargs(self, args, kwargs):
+        """
+        Update args and kwargs before passing on to request.
+        """
+        if not args:
+            method = kwargs.pop("method")
+            url = kwargs.pop("url")
+        elif len(args) == 1:
+            method = args[0]
+            url = kwargs.pop("url")
+        else:
+            method, url = args[:2]
+
+        if not url.startswith("https://"):
+            url = self._api_base_url + url
+
+        for key in self._defaults:
+            kwargs.setdefault(key, self._defaults[key])
+        return (method, url, *args[2:]), kwargs
+
 
 class UserSession(BaseAuthSession):
     """
@@ -163,7 +226,6 @@ class UserSession(BaseAuthSession):
     """
 
     def __init__(self, auth_force=False, session_key=None):
-        self._api_base_url = _CONSTANTS["API_BASE_URL"]
         self._client_id = _CONSTANTS["USER_CLIENT_ID"]
         self._client_secret = _CONSTANTS["USER_CLIENT_SECRET"]
         self._authority_url = _CONSTANTS["USER_AUTHORITY_URL"]
