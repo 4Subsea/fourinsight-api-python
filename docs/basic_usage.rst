@@ -8,7 +8,7 @@ Authorization Code Flow
 -----------------------
 
 The steps below outline how to use the Authorization Code Grant Type workflow to
-get access to a protected resource in `4insight.io`_.
+set up an authenticated session and get access to a protected resource in `4insight.io`_.
 
 Set up an authenticated User Session::
 
@@ -27,7 +27,7 @@ Client Credentials Flow
 -----------------------
 
 The steps below outline how to use the Client Credentials Grant Type workflow to
-get access to a protected resource in `4insight.io`_.
+set up an authenticated session and get access to a protected resource in `4insight.io`_.
 
 Set up an authenticated Client Session using your ``client_id`` and ``client_secret``::
 
