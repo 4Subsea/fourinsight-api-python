@@ -26,7 +26,7 @@ fine with older versions... but not Python 2!)
 
 .. _install-upgrade:
 
-To install from `PyPI`_::
+To install using `pip`_::
 
    pip install fourinsight-api
 
