@@ -21,8 +21,7 @@ How to install
 **************
 
 :py:mod:`fourinsight.api` is written in pure Python and supports Windows,
-Linux, and MacOS. Python >=3.6 is officially supported (but it may work just
-fine with older versions... but not Python 2!)
+Linux, and MacOS. Python >=3.6 is officially supported.
 
 .. _install-upgrade:
 
