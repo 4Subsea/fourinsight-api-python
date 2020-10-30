@@ -42,9 +42,9 @@ Test
 QA
 --
 
-* API_BASE_URL: TBA
+* API_BASE_URL: "https://4insight-api-qa.4subsea.net"
 * USER_CLIENT_ID: TBA
 * USER_CLIENT_SECRET: TBA
-* USER_AUTHORITY_URL: TBA
-* CLIENT_TOKEN_URL: TBA
-* CLIENT_SCOPE: [TBA]
+* USER_AUTHORITY_URL: "https://4insight-qa.4subsea.net/auth"
+* CLIENT_TOKEN_URL: "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token"
+* CLIENT_SCOPE: ["https://4subseaid.onmicrosoft.com/4insight-qa-test/.default"]
