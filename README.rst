@@ -1,4 +1,10 @@
-fourinsight-api
+fourinsight.api
 ###############
 
-The Python API for '4insight.io'.
+:py:mod:`fourinsight.api` is your portal to `4Insight.io`_ in Python, and facilitates secure calls to the `4Insight REST API`_ endpoints.
+
+:py:mod:`fourinsight.api` is mainly used by other high-level 4Inisght Python packages. However, it can also be used to make low-level HTTP calls.
+
+
+.. _4Insight.io: https://4insight.io
+.. _4Insight REST API: https://4insight.io/#/developer
