@@ -175,7 +175,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
     @_request_logger
     def request(self, *args, **kwargs):
         """
-        Extend the ``requests_oauthlib.OAuth2Session.request" method to
+        Extend the ``requests_oauthlib.OAuth2Session.request`` method to
         allow relative urls and supply default arguments.
         """
         args, kwargs = self._update_args_kwargs(args, kwargs)
