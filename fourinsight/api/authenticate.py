@@ -109,9 +109,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
 
         # Attention: Be careful when extending the list of retry_status!
         retry_status = frozenset([413, 429, 502, 503, 504])
-        method_allow = frozenset(
-            ["GET", "POST", "PUT", "PATCH", "DELETE"]
-        )
+        method_allow = frozenset(["GET", "POST", "PUT", "PATCH", "DELETE"])
 
         persist = Retry(
             total=3,
@@ -310,7 +308,7 @@ class ClientSession(BaseAuthSession):
         )
 
     def _prepare_fetch_token_args(self):
-        args = (self._token_url, )
+        args = (self._token_url,)
         kwargs = {
             "client_secret": self._client_secret,
             "scope": self._scope,

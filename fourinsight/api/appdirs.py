@@ -2,9 +2,8 @@
 This code was taken from https://github.com/ActiveState/appdirs (v1.4.4) and
 modified to suit our purposes.
 """
-import sys
 import os
-
+import sys
 
 if sys.platform.startswith("java"):  # pragma: no cover
     import platform

@@ -1,6 +1,5 @@
 import logging
 
-from .authenticate import UserSession, ClientSession
-
+from .authenticate import ClientSession, UserSession
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())

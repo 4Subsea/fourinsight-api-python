@@ -3,9 +3,9 @@ from unittest.mock import patch
 
 from fourinsight.api import appdirs
 
+
 @patch("fourinsight.api.appdirs.system")
 class Test_user_data_dir:
-
     def test_no_module_name(self, mock_system):
         # Mock MacOS
         appdirs.system = "darwin"
@@ -26,7 +26,9 @@ class Test_user_data_dir:
         # Mock MacOS
         appdirs.system = "darwin"
         path = appdirs.user_data_dir("api")
-        assert path == os.path.normpath(os.path.expanduser("~/.config/.fourinsight/api"))
+        assert path == os.path.normpath(
+            os.path.expanduser("~/.config/.fourinsight/api")
+        )
 
         # Mock Windows
         appdirs.system = "win32"

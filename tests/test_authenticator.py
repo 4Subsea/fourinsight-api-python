@@ -4,6 +4,7 @@ from io import StringIO
 from unittest.mock import MagicMock, patch
 
 import pytest
+
 from fourinsight.api import authenticate
 
 _CONSTANTS = authenticate._CONSTANTS
@@ -406,7 +407,14 @@ class Test_BaseAuthSession:
 
         args_out, kwargs_out = auth._update_args_kwargs(args, kwargs)
 
-        assert args + ("GET", auth._api_base_url + "/v1.0/ding/dong",) == args_out
+        assert (
+            args
+            + (
+                "GET",
+                auth._api_base_url + "/v1.0/ding/dong",
+            )
+            == args_out
+        )
         assert {"timeout": auth._defaults["timeout"], "other": "thing"} == kwargs_out
 
     def test_update_args_kwargs_args_len_1(self, mock_fetch, mock_refresh):
