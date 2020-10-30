@@ -9,8 +9,11 @@ try:
 except ImportError:
     from importlib_resources import read_text
 
-from oauthlib.oauth2 import (BackendApplicationClient, InvalidGrantError,
-                             WebApplicationClient)
+from oauthlib.oauth2 import (
+    BackendApplicationClient,
+    InvalidGrantError,
+    WebApplicationClient,
+)
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
