@@ -34,7 +34,7 @@ jobs:
         run: |
           call c:\venv-python-dev\Scripts\activate.bat
           @echo on
-          isort --profile black --check .
+          isort --profile black
 
       - name: tox
         shell: cmd
