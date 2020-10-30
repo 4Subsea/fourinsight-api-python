@@ -35,4 +35,4 @@ And to upgrade to the latest version::
    pip install --upgrade fourinsight-api
 
 
-.. _PyPI: https://pypi.org/project/fourinsight-api/
+.. _pip: https://pypi.org/project/fourinsight-api/
