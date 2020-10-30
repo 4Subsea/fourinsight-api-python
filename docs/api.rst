@@ -3,14 +3,18 @@
 API
 ###
 
-fourinsight.api.UserSession
-***************************
+fourinsight.api
+***************
 
 .. autoclass:: UserSession
-   :members:
-
-fourinsight.api.ClientSession
-*****************************
+   :members: fetch_token, refresh_token
 
 .. autoclass:: ClientSession
+   :members: fetch_token, refresh_token
+
+fourinsight.api.authenticate
+****************************
+
+.. autoclass:: fourinsight.api.authenticate.BaseAuthSession
    :members:
+   :inherited-members:

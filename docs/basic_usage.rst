@@ -1,45 +1,73 @@
 Basic Usage
 ###########
 
-The :py:mod:`fourinsight.api` library provides access to protected resources in
-`4insight.io`_ through authenticated REST calls to `4insight REST APIs`_.
+:py:mod:`fourinsight.api` provides convinient access to protected resources in `4Insight.io`_ through authenticated calls to `4insight REST API`_ endpoints. Two different
+approaches are supported:
 
-Authorization Code Flow
------------------------
+	* **Single user / interactive** (OAuth2 Authorization Code Grant Type workflow)
+	* **Service account** / non-interactive client (OAuth2 Client Credentials Grant Type workflow)
 
-The steps below outline how to use the Authorization Code Grant Type workflow to
-set up an authenticated session and get access to a protected resource in `4insight.io`_.
+Single user / interactive
+-------------------------
+This is the preferred approach for single user interactive sessions, e.g. use in notebooks. The class for user authentication is :py:class:`UserSession`.
+You will be guided to your organizations login webpage, and login as usual. (We will not see or store your credentials!).
+Once authenticated, you can choose to re-use your (valid) access token (i.e. not be prompted to authenticate next time) or re-authenticate everytime:
 
-Set up an authenticated User Session::
+Example::
 
     from fourinsight.api import UserSession
 
-    user_session = UserSession()
-    # Follow instructions to authenticated
+    # Re-use (valid) access token from last sesssion 
+    session = UserSession()
 
-Use the ``user_session.get`` method to get e.g. a list of available campaigns
-in 4insight::
+    # or re-authenticate
+    session = UserSession(auth_force=True)
 
-    response = user_session.get('https://api.4insight.io/v1.0/Campaigns')
+.. caution::
 
+    Users on shared computers (with shared accounts) should always re-authenticate since access token
+    from a different user may unintentionally be used.
 
-Client Credentials Flow
------------------------
+If you desire to have multiple seperate session, it is advisable to set a session key during authetication.
+This will keep the sessions (token cache) seperate::
 
-The steps below outline how to use the Client Credentials Grant Type workflow to
-set up an authenticated session and get access to a protected resource in `4insight.io`_.
+    session_0 = UserSession(session_key="my_unique_session_0")
+    session_1 = UserSession(session_key="my_unique_session_1")
 
-Set up an authenticated Client Session using your ``client_id`` and ``client_secret``::
+Access and refresh tokens recieved during authentication are stored persistently to disk:
+
+    * Windows: ``%USERPROFILE\.fourinsight\api``
+    * Linux: ``~/.fourinsight/api``
+    * MacOs: ``~/.config/.fourinsight/api``
+
+Service account / non-interactive client
+----------------------------------------
+This is the recommended approach for applications / services making `4Insight REST API`_ calls, where
+an authentication flow with user interaction is not feasible nor desired. The class for client authetication is :py:class:`ClientSession`.
+
+Example::
 
     from fourinsight.api import ClientSession
 
-    client_session = ClientSession('client_id', 'client_secret')
+    session = ClientSession("my_client_id", "my_client_secret")
 
-Use the ``client_session.get`` method to get e.g. a list of available campaigns
-in 4insight::
+:ref:`Contact us <support>` to request *client id* and *client secret*.
 
-    response = client_session.get('https://api.4insight.io/v1.0/Campaigns')
+.. Note::
+
+    :py:class:`ClientSession` will always re-authenticate and not store access token persistently.
 
 
-.. _4insight.io: https://4insight.io
-.. _4insight REST APIs: https://4insight.io/#/developer
+Make API calls
+--------------
+::
+
+    response = session.get("https://api.4insight.io/v1.0/Campaigns")
+
+    # or with relative url
+
+    response = session.get("/v1.0/Campaigns")
+
+
+.. _4Insight.io: https://4insight.io
+.. _4Insight REST API: https://4insight.io/#/developer

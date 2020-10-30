@@ -1,13 +1,10 @@
 fourinsight.api
 ###############
 
-4insight Python API uses the :py:mod:`requests_oauthlib` library to facilitate
-authenticated access to resources in `4insight.io`_. When access is granted,
-authenticated calls can be done to the `4Insight REST API`_ endpoints.
+:py:mod:`fourinsight.api` is your portal to `4Insight.io`_ in Python, and facilitates secure calls to the `4Insight REST API`_ endpoints.
 
-An authenticated session is necessary input in e.g. the :py:mod:`fourinsight.campaigns.Client`,
-that offers a high-level Python API for retrieving campaigns data from 4insight.io.
+:py:mod:`fourinsight.api` is mainly used by other high-level 4Inisght Python packages. However, it can also be used to make low-level HTTP calls.
 
 
 .. _4Insight.io: https://4insight.io
-.. _4insight REST API: https://4insight.io/#/developer
+.. _4Insight REST API: https://4insight.io/#/developer
