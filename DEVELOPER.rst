@@ -7,12 +7,12 @@ This can be achieved by reconfiguring the API parameters on run-time::
     import fourinsight.api as fapi
 
     fapi.authenticate._CONSTANTS = {
-        "API_BASE_URL": "<URL for REST API endpoint>",
+        "API_BASE_URL": "https://api.4insight.io/",
         "USER_CLIENT_ID": "<Client ID used for UserSession>",
         "USER_CLIENT_SECRET": "<Client secret used for UserSession>",
         "USER_AUTHORITY_URL": "<Authority URL used for UserSession>",
-        "CLIENT_TOKEN_URL": "<Token URL used for ClientSession>",
-        "CLIENT_SCOPE": ["<List of scopes used for ClientSession>"]
+        "CLIENT_TOKEN_URL": "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token",
+        "CLIENT_SCOPE": ["https://4subseaid.onmicrosoft.com/4insight-api-prod/.default"]
     }
 
     session = fapi.UserSession()
