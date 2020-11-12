@@ -10,7 +10,7 @@ This can be achieved by reconfiguring the API parameters on run-time::
         "API_BASE_URL": "https://api.4insight.io/",
         "USER_CLIENT_ID": "<Client ID used for UserSession>",
         "USER_CLIENT_SECRET": "<Client secret used for UserSession>",
-        "USER_AUTHORITY_URL": "<Authority URL used for UserSession>",
+        "USER_AUTHORITY_URL": "https://4insight.io/auth",
         "CLIENT_TOKEN_URL": "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token",
         "CLIENT_SCOPE": ["https://4subseaid.onmicrosoft.com/4insight-api-prod/.default"]
     }
