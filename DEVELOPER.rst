@@ -47,4 +47,4 @@ QA
 * USER_CLIENT_SECRET: "H_McZ-g.56~SS1d4SxCcSUTp~0Sv3AVERk"
 * USER_AUTHORITY_URL: "https://4insight-qa.4subsea.net/auth"
 * CLIENT_TOKEN_URL: "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token"
-* CLIENT_SCOPE: ["https://4subseaid.onmicrosoft.com/4insight-qa-test/.default"]
+* CLIENT_SCOPE: ["https://4subseaid.onmicrosoft.com/4insight-api-qa/.default"]
