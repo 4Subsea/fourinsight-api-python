@@ -122,7 +122,9 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
             raise_on_status=False,
         )
         self.mount(self._api_base_url, HTTPAdapter(max_retries=persist))
-        self._defaults = {"timeout": 10.0}
+
+        # Must be reduced to a more reasonable value when backend perf is fixed!
+        self._defaults = {"timeout": 100.0}
 
         if auth_force or not self.token:
             token = self.fetch_token()

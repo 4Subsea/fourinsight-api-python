@@ -1,8 +1,8 @@
 {
-    "API_BASE_URL": "https://4insight-api-test.4subsea.net",
-    "USER_CLIENT_ID": "9176603a-f0e9-45ca-a615-15d8eb35d9d3",
-    "USER_CLIENT_SECRET": "vNIY8No17yF7gV.GN8mDou22gn.nZ_B.j3",
-    "USER_AUTHORITY_URL": "https://4insight-test.4subsea.net/auth",
+    "API_BASE_URL": "https://api.4insight.io/",
+    "USER_CLIENT_ID": "b6c8c4d4-5fc1-4bba-b46c-8f6a6cc9843d",
+    "USER_CLIENT_SECRET": "H_McZ-g.56~SS1d4SxCcSUTp~0Sv3AVERk",
+    "USER_AUTHORITY_URL": "https://4insight.io/auth",
     "CLIENT_TOKEN_URL": "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token",
-    "CLIENT_SCOPE": ["https://4subseaid.onmicrosoft.com/4insight-api-test/.default"]
+    "CLIENT_SCOPE": ["https://4subseaid.onmicrosoft.com/4insight-api-prod/.default"]
 }
