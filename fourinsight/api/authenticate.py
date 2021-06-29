@@ -182,9 +182,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         allow relative urls and supply default arguments.
         """
         args, kwargs = self._update_args_kwargs(args, kwargs)
-
         response = super().request(*args, **kwargs)
-        response.raise_for_status()
         return response
 
     def _update_args_kwargs(self, args, kwargs):
