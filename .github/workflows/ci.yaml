@@ -22,23 +22,36 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Create virtual environment
+        shell: cmd
+        run: |
+          call "%PROGRAMFILES%\Python38\python" -m venv .venv
+
+      - name: Install dependencies
+        shell: cmd
+        run: |
+          call .venv\Scripts\activate.bat
+          pip install black
+          pip install isort
+          pip install tox
+
       - name: black check
         shell: cmd
         run: |
-          call c:\venv-python-dev\Scripts\activate.bat
+          call .venv\Scripts\activate.bat
           @echo on
           black --check .
 
       - name: isort check
         shell: cmd
         run: |
-          call c:\venv-python-dev\Scripts\activate.bat
+          call .venv\Scripts\activate.bat
           @echo on
           isort --profile black --check .
 
       - name: tox
         shell: cmd
         run: |
-          call c:\venv-python-dev\Scripts\activate.bat
+          call .venv\Scripts\activate.bat
           @echo on
           tox -r
