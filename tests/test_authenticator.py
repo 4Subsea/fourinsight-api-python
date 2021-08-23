@@ -10,6 +10,22 @@ from fourinsight.api import authenticate
 _CONSTANTS = authenticate._CONSTANTS
 
 
+def test_constants():
+    constants_out = authenticate._CONSTANTS
+
+    constants_expected = {
+        "API_BASE_URL": "https://api.4insight.io/",
+        "USER_CLIENT_ID": "b6c8c4d4-5fc1-4bba-b46c-8f6a6cc9843d",
+        "USER_CLIENT_SECRET": "H_McZ-g.56~SS1d4SxCcSUTp~0Sv3AVERk",
+        "USER_AUTHORITY_URL": "https://4insight.io/auth",
+        "CLIENT_TOKEN_URL": "https://login.microsoftonline.com/4subseaid.onmicrosoft.com/oauth2/v2.0/token",
+        "CLIENT_SCOPE": [
+            "https://4subseaid.onmicrosoft.com/4insight-api-prod/.default"
+        ],
+    }
+    assert constants_out == constants_expected
+
+
 @patch("fourinsight.api.authenticate.user_data_dir")
 class Test_TokenCache:
     def test_init_dir_doesnt_exists(self, mock_cache_dir, tmp_path):
