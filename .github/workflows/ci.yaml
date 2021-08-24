@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
         python-version: [3.8]
 
     steps:
@@ -23,9 +23,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: pip list
-        run: python -m pip list
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -35,6 +32,9 @@ jobs:
         run: |
           python -m isort --check . --profile black
           python -m black --check .
+
+      - name: pip list
+        run: python -m pip list
 
       - name: Run tests with tox
         run: tox -e py
