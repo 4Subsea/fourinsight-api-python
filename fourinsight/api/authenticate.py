@@ -22,7 +22,7 @@ from .appdirs import user_data_dir
 
 log = logging.getLogger(__name__)
 
-_CONSTANTS = {} # json.loads(read_text("fourinsight.api", "_constants.json"))
+_CONSTANTS = {}  # json.loads(read_text("fourinsight.api", "_constants.json"))
 
 
 def _request_logger(func):
