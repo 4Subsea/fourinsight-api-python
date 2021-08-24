@@ -3,11 +3,20 @@ import logging
 from io import StringIO
 from unittest.mock import MagicMock, patch
 
+try:
+    from importlib.resources import contents
+except ImportError:
+    from importlib_resources import contents
+
 import pytest
 
 from fourinsight.api import authenticate
 
 _CONSTANTS = authenticate._CONSTANTS
+
+
+def test_bogus():
+    print(list(contents("fourinsight.api")))
 
 
 def test_constants():
