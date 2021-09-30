@@ -1,16 +1,11 @@
 .. include:: ../README.rst
 
-Contents
-========
 
 .. toctree::
-   :glob:
-   :titlesonly:
-   :maxdepth: 2
+   :hidden:
 
    getting_started
-   basic_usage
-   logging
-   api
-   developer
+   user_guide/index
+   api_ref/index
+   release_notes
    support

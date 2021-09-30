@@ -213,7 +213,7 @@ class UserSession(BaseAuthSession):
     and persisted. A previous session will be reused as long as it is not
     expired. When required, a new authentication code is prompted for.
 
-    Extends ``BaseAuthSession``.
+    Extends :class:`~fourinsight.api.authenticate.BaseAuthSession`.
 
     Parameters
     ----------
@@ -284,7 +284,7 @@ class ClientSession(BaseAuthSession):
     client_secret. When valid credentials are presented, the session is
     authenticated and persisted.
 
-    Extends ``BaseAuthSession``.
+    Extends :class:`~fourinsight.api.authenticate.BaseAuthSession`.
 
     Parameters
     ----------

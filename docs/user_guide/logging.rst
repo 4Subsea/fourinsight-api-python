@@ -1,8 +1,10 @@
 Logging
-#######
+=======
 
 :py:mod:`fourinsight.api` allows for detailed logging of API calls.
-For instance, outputing the log to ``stdout`` can be done in the following manner::
+For instance, outputing the log to ``stdout`` can be done in the following manner:
+
+.. code-block:: python
 
     import logging
     from sys import stdout

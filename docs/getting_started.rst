@@ -1,10 +1,40 @@
-
 Getting Started
-###############
+===============
 
-Authentication and authorization
-******************************************
+New to Python?
+--------------
+You need to have Python installed on your system before you can use this package.
+Head over to `Python.org`_ for instructions.
 
+Python version support
+----------------------
+Officially Python 3.7, 3.8, and 3.9. We aim to support the three most
+recent major versions.
+
+OS support
+----------
+This package is tested with the latest Windows, MacOS, and Ubuntu (Linux) versions.
+
+Install
+-------
+``fourinsight.api`` can be installed via pip from `PyPI`_.
+
+.. code-block:: shell
+
+   pip install fourinsight-api
+
+.. _upgrade:
+
+Upgrade
+-------
+``fourinsight.api`` can be upgraded via pip from `PyPI`_.
+
+.. code-block:: shell
+
+   pip install --upgrade fourinsight-api
+
+Authentication
+--------------
 Your data may be your most valued treasure and security is no laughing matter!
 At least we take it very seriously. Every API call requires authentication and
 every bit of data (pun intended) requires authorization to access.
@@ -17,21 +47,5 @@ organization. For single user access, :ref:`contact us <support>` and we will ho
 For non-interactive applications (daemons), you would need
 a set of ``client_id`` and ``client_secret``. :ref:`Contact us <support>` and we will help you.
 
-How to install
-**************
-
-:py:mod:`fourinsight.api` is written in pure Python and supports Windows,
-Linux, and MacOS. Python >=3.7 is officially supported.
-
-.. _install-upgrade:
-
-To install using `pip`_::
-
-   pip install fourinsight-api
-
-And to upgrade to the latest version::
-
-   pip install --upgrade fourinsight-api
-
-
-.. _pip: https://pypi.org/project/fourinsight-api/
+.. _Python.org: https://python.org
+.. _PyPI: https://pypi.org/
