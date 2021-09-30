@@ -71,8 +71,10 @@ html_theme = "pydata_sphinx_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-html_css_files = ['css/custom.css']
-html_logo = "_static/4insight-logo.svg" # "_static/Logo 4Subsea horisontal negative.png"
+html_css_files = ["css/custom.css"]
+html_logo = (
+    "_static/4insight-logo.svg"  # "_static/Logo 4Subsea horisontal negative.png"
+)
 html_theme_options = {
     "external_links": [
         {"name": "4Insight.io", "url": "https://4insight.io"},
@@ -87,6 +89,6 @@ html_theme_options = {
             "name": "PyPI",
             "url": "https://pypi.org/project/fourinsight-api",
             "icon": "fas fa-box",
-        }
-    ]
+        },
+    ],
 }
