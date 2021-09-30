@@ -1,8 +1,7 @@
 Authentication and authorization
 ================================
 
-:py:mod:`fourinsight.api` provides convinient access to protected resources in `4Insight.io`_ through authenticated calls to `4insight REST API`_ endpoints. Two different
-approaches are supported:
+:py:mod:`fourinsight.api` supports two different approaches for making authenticated calls to the `4insight REST API`_ endpoints:
 
 	* **Single user / interactive** (OAuth2 Authorization Code Grant Type workflow)
 	* **Service account** / non-interactive client (OAuth2 Client Credentials Grant Type workflow)

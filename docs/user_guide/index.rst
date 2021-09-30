@@ -1,18 +1,13 @@
 User Guide
 ==========
 
-Your data may be your most valued treasure and security is no laughing matter!
-At least we take it very seriously. Every API call requires authentication and
-every bit of data (pun intended) requires authorization to access.
+:py:mod:`fourinsight.api` provides convinient access to protected resources in
+`4Insight.io`_ through authenticated calls to `4insight REST API`_ endpoints. 
 
-Before you can start to use :py:mod:`fourinsight.api`, you need to be able to
-authenticate. If your organization is granted access via federation,
-then you may use your prefered method to authenticate as it is done within your
-organization. For single user access, :ref:`contact us <support>` and we will hook you up.
 
-For non-interactive applications (daemons), you would need
-a set of ``client_id`` and ``client_secret``. :ref:`Contact us <support>` and we will help you.
 
+.. _4Insight.io: https://4insight.io
+.. _4Insight REST API: https://4insight.io/#/developer
 
 
 .. toctree::
