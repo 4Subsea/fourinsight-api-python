@@ -6,7 +6,7 @@ New to Python?
 You need to have Python installed on your system before you can use this package.
 Head over to `Python.org`_ for instructions.
 
-Python version support
+Python Version Support
 ----------------------
 Officially Python 3.7, 3.8, and 3.9. We aim to support the three most
 recent major versions.
