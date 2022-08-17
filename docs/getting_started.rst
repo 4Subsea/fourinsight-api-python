@@ -11,7 +11,7 @@ Python Version Support
 Officially Python 3.7, 3.8, and 3.9. We aim to support the three most
 recent major versions.
 
-OS support
+OS Support
 ----------
 This package is tested with the latest Windows, MacOS, and Ubuntu (Linux) versions.
 
