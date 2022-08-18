@@ -1,4 +1,4 @@
-Make API Calls
+Make API calls
 ==============
 
 Below example demonstrate how to make an API call to `4Insight.io`_

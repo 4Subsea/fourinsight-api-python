@@ -1,4 +1,4 @@
-Authentication and Authorization
+Authentication and authorization
 ================================
 
 :py:mod:`fourinsight.api` supports two different approaches for making authenticated calls to the `4insight REST API`_ endpoints:
@@ -6,7 +6,7 @@ Authentication and Authorization
 	* **Single user / interactive** (OAuth2 Authorization Code Grant Type workflow)
 	* **Service account** / non-interactive client (OAuth2 Client Credentials Grant Type workflow)
 
-Single User / Interactive
+Single user / interactive
 -------------------------
 This is the preferred approach for single user interactive sessions, e.g. use in notebooks. The class for user authentication is :py:class:`UserSession`.
 You will be guided to your organizations login webpage, and login as usual. (We will not see or store your credentials!).
@@ -41,7 +41,7 @@ Access and refresh tokens recieved during authentication are stored persistently
     * Linux: ``~/.fourinsight/api``
     * MacOs: ``~/.config/.fourinsight/api``
 
-Service Account / Non-interactive Client
+Service account / non-interactive client
 ----------------------------------------
 This is the recommended approach for applications / services making `4Insight REST API`_ calls, where
 an authentication flow with user interaction is not feasible nor desired. The class for client authetication is :py:class:`ClientSession`.
