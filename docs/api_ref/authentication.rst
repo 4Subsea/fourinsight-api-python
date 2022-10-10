@@ -1,9 +1,12 @@
-.. py:currentmodule:: fourinsight.api.authenticate
+==============
+Authentication
+==============
+.. currentmodule:: fourinsight.api.authenticate
 
-fourinsight.api.authenticate
-============================
 
-.. autoclass:: BaseAuthSession
-   :members:
-   :inherited-members:
+.. autosummary::
+    :toctree:
+    :template: class.rst
+
+    BaseAuthSession
 
