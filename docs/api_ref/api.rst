@@ -1,11 +1,14 @@
-.. py:currentmodule:: fourinsight.api
+=======
+General
+=======
 
-fourinsight.api
-===============
+.. currentmodule:: fourinsight.api
 
-.. autoclass:: UserSession
-   :members: fetch_token, refresh_token
 
-.. autoclass:: ClientSession
-   :members: fetch_token, refresh_token
+.. autosummary::
+    :toctree:
+    :template: class.rst
+
+    UserSession
+    ClientSession
 
