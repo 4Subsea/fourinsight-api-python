@@ -53,7 +53,7 @@ intersphinx_mapping = {
 }
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates/autosummary"]
+templates_path = ["_templates/autosummary", "_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -86,12 +86,12 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/4subsea/fourinsight-xyz",
+            "url": "https://github.com/4Subsea/fourinsight-api-python",
             "icon": "fab fa-github",
         },
         {
             "name": "PyPI",
-            "url": "https://pypi.org/project/fourinsight-xyz",
+            "url": "https://pypi.org/project/fourinsight-api/",
             "icon": "fas fa-box",
         },
     ],
