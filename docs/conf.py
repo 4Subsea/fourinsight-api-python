@@ -65,7 +65,7 @@ def linkcode_resolve(domain, info):
 
         path = f"{github_repo}blob/main/{path}#L{lineno}-L{lineno + len(src) - 1}"
 
-    except:
+    except Exception:
         path = None
     return path
 
