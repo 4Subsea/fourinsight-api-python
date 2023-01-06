@@ -63,7 +63,7 @@ class TokenCache:
         self._token[key] = value
 
     @property
-    def _token_root(self): 
+    def _token_root(self):
         return user_data_dir("api")
 
     @property

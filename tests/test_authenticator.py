@@ -125,7 +125,6 @@ class Test_TokenCache:
         session_key = "my_session_key"
         cache_path = cache_dir / f"token.{session_key}"
 
-
         token_cache = authenticate.TokenCache(session_key=session_key)
 
         token = {"access_token": "123abc"}
@@ -135,8 +134,6 @@ class Test_TokenCache:
             token_output = json.load(f)
 
         assert token == token_output
-
-
 
     def test_dump(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"
