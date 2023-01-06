@@ -7,8 +7,6 @@ import pytest
 
 from fourinsight.api import authenticate
 
-import os
-
 _CONSTANTS = authenticate._CONSTANTS
 
 
