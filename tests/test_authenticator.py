@@ -7,6 +7,8 @@ import pytest
 
 from fourinsight.api import authenticate
 
+import os
+
 _CONSTANTS = authenticate._CONSTANTS
 
 
@@ -29,6 +31,7 @@ def test_constants():
 @patch("fourinsight.api.authenticate.user_data_dir")
 class Test_TokenCache:
     def test_init_dir_doesnt_exists(self, mock_cache_dir, tmp_path):
+
         cache_dir = tmp_path / "cache_dir"
         mock_cache_dir.return_value = cache_dir
 
@@ -59,18 +62,20 @@ class Test_TokenCache:
         token_cache = authenticate.TokenCache()
         assert token_cache._token == {"access_token": "123abc"}
 
-    def test__token_root(self, mock_cache_dir):
-        mock_cache_dir.return_value = "my_dir"
+    def test__token_root(self, mock_cache_dir, tmp_path):
+        my_dir = tmp_path / "my_dir"
+        mock_cache_dir.return_value = my_dir
+
         token_cache = authenticate.TokenCache()
         token_root = token_cache._token_root
 
-        assert token_root == "my_dir"
+        assert token_root == my_dir
+
         mock_cache_dir.assert_called_with("api")
 
     def test_token_path(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"
         mock_cache_dir.return_value = cache_dir
-        cache_dir.mkdir()
 
         cache_path = cache_dir / "token"
 
@@ -80,7 +85,6 @@ class Test_TokenCache:
     def test_token_path_session_key(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"
         mock_cache_dir.return_value = cache_dir
-        cache_dir.mkdir()
 
         session_key = "my_session_key"
         cache_path = cache_dir / f"token.{session_key}"
@@ -88,21 +92,27 @@ class Test_TokenCache:
         token_cache = authenticate.TokenCache(session_key=session_key)
         assert token_cache.token_path == str(cache_path)
 
-    def test_token(self, mock_cache_dir):
-        mock_cache_dir.return_value = "my_dir"
+    def test_token(self, mock_cache_dir, tmp_path):
+        my_dir = tmp_path / "my_dir"
+        mock_cache_dir.return_value = my_dir
+
         token_cache = authenticate.TokenCache()
         token_cache._token = {"access_token": "123abc"}
 
         assert token_cache.token == {"access_token": "123abc"}
 
-    def test_token_none(self, mock_cache_dir):
-        mock_cache_dir.return_value = "my_dir"
+    def test_token_none(self, mock_cache_dir, tmp_path):
+        my_dir = tmp_path / "my_dir"
+        mock_cache_dir.return_value = my_dir
+
         token_cache = authenticate.TokenCache()
 
         assert token_cache.token is None
 
-    def test_append(self, mock_cache_dir):
-        mock_cache_dir.return_value = "my_dir"
+    def test_append(self, mock_cache_dir, tmp_path):
+        my_dir = tmp_path / "my_dir"
+        mock_cache_dir.return_value = my_dir
+
         token_cache = authenticate.TokenCache()
         token_cache._token = {"access_token": "123abc"}
 
@@ -113,10 +123,10 @@ class Test_TokenCache:
     def test_dump_session_key(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"
         mock_cache_dir.return_value = cache_dir
-        cache_dir.mkdir()
 
         session_key = "my_session_key"
         cache_path = cache_dir / f"token.{session_key}"
+
 
         token_cache = authenticate.TokenCache(session_key=session_key)
 
@@ -127,6 +137,8 @@ class Test_TokenCache:
             token_output = json.load(f)
 
         assert token == token_output
+
+
 
     def test_dump(self, mock_cache_dir, tmp_path):
         cache_dir = tmp_path / "cache_dir"
@@ -164,8 +176,9 @@ class Test_TokenCache:
         token.update({"new_key": "new_value"})
         assert token == token_output
 
-    def test_call(self, mock_cache_dir):
-        mock_cache_dir.return_value = "my_dir"
+    def test_call(self, mock_cache_dir, tmp_path):
+        my_dir = tmp_path / "my_dir"
+        mock_cache_dir.return_value = my_dir
         token_cache = authenticate.TokenCache()
 
         with patch.object(token_cache, "dump") as mock_dump:
