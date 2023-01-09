@@ -19,6 +19,7 @@ from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
 
 import fourinsight.api as fapi
+
 from .appdirs import user_data_dir
 
 log = logging.getLogger(__name__)
