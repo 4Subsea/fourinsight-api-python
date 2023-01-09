@@ -18,6 +18,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
 
+import fourinsight.api as fapi
 from .appdirs import user_data_dir
 
 log = logging.getLogger(__name__)
@@ -140,6 +141,10 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
 
         if self.token_updater:
             self.token_updater(token)
+
+        self.headers.update(
+            {"user-agent": f"python-fourinsight-engineroom-utils/{fapi.__version__}"}
+        )
 
     def fetch_token(self):
         """Fetch new access and refresh token."""
