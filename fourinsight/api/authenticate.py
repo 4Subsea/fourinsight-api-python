@@ -143,7 +143,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
             self.token_updater(token)
 
         self.headers.update(
-            {"user-agent": f"python-fourinsight-engineroom-utils/{fapi.__version__}"}
+            {"user-agent": f"python-fourinsight-api/{fapi.__version__}"}
         )
 
     def fetch_token(self):
