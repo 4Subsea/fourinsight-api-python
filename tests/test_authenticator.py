@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
+import fourinsight.api as fapi
 from fourinsight.api import authenticate
 
 _CONSTANTS = authenticate._CONSTANTS
@@ -187,6 +188,9 @@ class Test_ClientSession:
             include_client_id=True,
         )
         assert auth.auto_refresh_url == _CONSTANTS["CLIENT_TOKEN_URL"]
+        assert (
+            auth.headers["user-agent"] == f"python-fourinsight-api/{fapi.__version__}"
+        )
 
     def test_refresh_token(self, mock_fetch, mock_refresh):
         auth = authenticate.ClientSession("my_client_id", "my_client_secret")
@@ -243,6 +247,11 @@ class Test_UserSession:
             )
 
             auth = authenticate.UserSession(auth_force=True)
+
+            assert (
+                auth.headers["user-agent"]
+                == f"python-fourinsight-api/{fapi.__version__}"
+            )
 
             mock_fetch.assert_called_once_with(
                 "my_token_url",
