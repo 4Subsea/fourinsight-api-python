@@ -282,6 +282,26 @@ class UserSession(BaseAuthSession):
         }
         return args, kwargs
 
+    def get_page(self, url, **kwargs):
+
+        """
+        url:
+            api endpoint that supports odata and contains the parameter '@odata.nextLink']
+
+        **kwargs:
+            Optional arguments that ``session.get`` takes,.
+
+        """
+
+        while url:
+            response = self.get(url, **kwargs)
+
+            try:
+                url = response.json().get("@odata.nextLink")
+            except AttributeError:
+                raise AttributeError("This endpoint does not support odata")
+            yield response
+
 
 class ClientSession(BaseAuthSession):
     """
@@ -331,3 +351,23 @@ class ClientSession(BaseAuthSession):
         """Refresh (expired) access token"""
         token = self.fetch_token()
         return token
+
+    def get_page(self, url, **kwargs):
+
+        """
+        url:
+            api endpoint that supports odata and contains the parameter '@odata.nextLink']
+
+        **kwargs:
+            Optional arguments that ``session.get`` takes,.
+
+        """
+
+        while url:
+            response = self.get(url, **kwargs)
+
+            try:
+                url = response.json().get("@odata.nextLink")
+            except AttributeError:
+                raise AttributeError("This endpoint does not support odata")
+            yield response
