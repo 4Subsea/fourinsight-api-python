@@ -101,7 +101,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         The provided dict is stored internally in '_session_params'.
     auth_force : bool, optional
         Force re-authenticating the session (default is False)
-    kwargs : keyword arguments
+    \*\*kwargs : keyword arguments
         Keyword arguments passed on to ``requests_oauthlib.OAuth2Session``.
         Here, the mandatory parameters for the authentication client shall be
         provided.
@@ -211,6 +211,39 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
             kwargs.setdefault(key, self._defaults[key])
         return (method, url, *args[2:]), kwargs
 
+    def get_pages(self, url, **kwargs):
+        """
+        Function that returns a generator that lets user iterate over paginated responses. If the endpoint does not support pagination, the full response is returned
+
+        Parameters
+        ----------
+
+        url: string
+            API endpoint. To return pages, the endpoint must support odata and contain the parameter '@odata.nextLink']
+
+        \*\*kwargs:
+            Optional arguments that ``session.get`` takes.
+
+    
+        Returns
+        -------
+
+        response: generator
+            generator object that contains the response
+
+        """
+
+        while url:
+            response = self.get(url, **kwargs)
+
+            try:
+                url = response.json().get("@odata.nextLink")
+            except AttributeError:
+                url = None
+            finally:
+                yield response
+            
+
 
 class UserSession(BaseAuthSession):
     """
@@ -283,24 +316,7 @@ class UserSession(BaseAuthSession):
         }
         return args, kwargs
 
-    def get_page(self, url, **kwargs):
-        """
-        url:
-            api endpoint that supports odata and contains the parameter '@odata.nextLink']
 
-        kwargs:
-            Optional arguments that ``session.get`` takes.
-
-        """
-
-        while url:
-            response = self.get(url, **kwargs)
-
-            try:
-                url = response.json().get("@odata.nextLink")
-            except AttributeError:
-                raise AttributeError("This endpoint does not support odata")
-            yield response
 
 
 class ClientSession(BaseAuthSession):
@@ -352,21 +368,3 @@ class ClientSession(BaseAuthSession):
         token = self.fetch_token()
         return token
 
-    def get_page(self, url, **kwargs):
-        """
-        url:
-            api endpoint that supports odata and contains the parameter '@odata.nextLink']
-
-        kwargs:
-            Optional arguments that ``session.get`` takes.
-
-        """
-
-        while url:
-            response = self.get(url, **kwargs)
-
-            try:
-                url = response.json().get("@odata.nextLink")
-            except AttributeError:
-                raise AttributeError("This endpoint does not support odata")
-            yield response
