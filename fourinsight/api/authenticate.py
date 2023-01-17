@@ -223,7 +223,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         \*\*kwargs:
             Optional arguments that ``session.get`` takes.
 
-    
+
         Returns
         -------
 
@@ -241,7 +241,6 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
                 url = None
             finally:
                 yield response
-            
 
 
 class UserSession(BaseAuthSession):
@@ -316,8 +315,6 @@ class UserSession(BaseAuthSession):
         return args, kwargs
 
 
-
-
 class ClientSession(BaseAuthSession):
     """
     Authorized session where credentials are given as client_id and
@@ -366,4 +363,3 @@ class ClientSession(BaseAuthSession):
         """Refresh (expired) access token"""
         token = self.fetch_token()
         return token
-

@@ -238,7 +238,6 @@ class Test_ClientSession:
             include_client_id=True,
         )
 
-    
 
 @patch("fourinsight.api.authenticate.OAuth2Session.refresh_token")
 @patch("fourinsight.api.authenticate.OAuth2Session.fetch_token")
@@ -524,7 +523,7 @@ class Test_BaseAuthSession:
         stream.seek(0)
         log_out = stream.read()
         assert log_out.startswith("request initiated")
-    
+
     def test_get_pages_call_get(self, mock_fetch, mock_refresh):
         with patch.object(authenticate.ClientSession, "get") as mock_get:
 
@@ -547,14 +546,10 @@ class Test_BaseAuthSession:
 
             mock_get.assert_called_once_with(test_url, b="True")
 
-
     def test_get_pages_response_object(self, mock_fetch, mock_refresh):
         auth = authenticate.ClientSession("my_client_id", "my_client_secret")
         gen = auth.get_pages("myurl")
         assert inspect.isgenerator(gen)
-
-    
-    
 
 
 if __name__ == "__main__":
