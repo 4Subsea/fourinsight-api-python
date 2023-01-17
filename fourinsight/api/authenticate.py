@@ -284,13 +284,12 @@ class UserSession(BaseAuthSession):
         return args, kwargs
 
     def get_page(self, url, **kwargs):
-
         """
         url:
             api endpoint that supports odata and contains the parameter '@odata.nextLink']
 
-        **kwargs:
-            Optional arguments that ``session.get`` takes,.
+        kwargs:
+            Optional arguments that ``session.get`` takes.
 
         """
 
@@ -354,13 +353,12 @@ class ClientSession(BaseAuthSession):
         return token
 
     def get_page(self, url, **kwargs):
-
         """
         url:
             api endpoint that supports odata and contains the parameter '@odata.nextLink']
 
-        **kwargs:
-            Optional arguments that ``session.get`` takes,.
+        kwargs:
+            Optional arguments that ``session.get`` takes.
 
         """
 
