@@ -1,10 +1,10 @@
+import inspect
 import json
 import logging
 from io import StringIO
 from unittest.mock import MagicMock, patch
 
 import pytest
-import inspect
 
 import fourinsight.api as fapi
 from fourinsight.api import authenticate
