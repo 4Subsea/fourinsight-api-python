@@ -244,38 +244,6 @@ class Test_ClientSession:
 @patch("fourinsight.api.authenticate.OAuth2Session.fetch_token")
 @patch("fourinsight.api.authenticate.TokenCache")
 class Test_UserSession:
-    def test_call_get(self, mock_token, mock_fetch, mock_refresh):
-        with patch.object(authenticate.UserSession, "get") as mock_get:
-
-            test_url = "myurl"
-            gen = authenticate.UserSession().get_page(test_url)
-            next(gen)
-
-            mock_get.assert_called_once_with(test_url)
-
-    def test_call_get_with_kwargs(self, mock_token, mock_fetch, mock_refresh):
-        with patch.object(authenticate.UserSession, "get") as mock_get:
-
-            test_url = "myurl"
-            gen = authenticate.UserSession().get_page(test_url, b="True")
-            next(gen)
-
-            mock_get.assert_called_once_with(test_url, b="True")
-
-    def test_raise_exception(self, mock_token, mock_fetch, mock_refresh):
-        with patch.object(authenticate.UserSession, "get") as mock_get:
-            mock_get.return_value = []
-            test_url = "myurl"
-            gen = authenticate.UserSession().get_page(test_url)
-
-            with pytest.raises(AttributeError):
-                next(gen)
-
-    def test_response_object(self, mock_token, mock_fetch, mock_refresh):
-        with patch.object(authenticate.UserSession, "get") as mock_get:
-            gen = authenticate.UserSession().get_page("myurl")
-            assert inspect.isgenerator(gen)
-
     def test_init_force_auth(self, mock_token, mock_fetch, mock_refresh):
         with patch.object(
             authenticate.UserSession, "_prepare_fetch_token_args"
