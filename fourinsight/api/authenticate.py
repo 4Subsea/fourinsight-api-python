@@ -85,7 +85,7 @@ class TokenCache:
 
 
 class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
-    """
+    r"""
     Abstract class for authorized sessions.
 
     Parameters
@@ -101,7 +101,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         The provided dict is stored internally in '_session_params'.
     auth_force : bool, optional
         Force re-authenticating the session (default is False)
-    \*\*kwargs : keyword arguments
+    **kwargs : keyword arguments
         Keyword arguments passed on to ``requests_oauthlib.OAuth2Session``.
         Here, the mandatory parameters for the authentication client shall be
         provided.
@@ -211,7 +211,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         return (method, url, *args[2:]), kwargs
 
     def get_pages(self, url, **kwargs):
-        """
+        r"""
         Function that returns a generator that lets user iterate over paginated responses. If the endpoint does not support pagination, the full response is returned
 
         Parameters
@@ -220,7 +220,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         url: string
             API endpoint. To return pages, the endpoint must support odata and contain the parameter '@odata.nextLink']
 
-        \*\*kwargs:
+        **kwargs:
             Optional arguments that ``session.get`` takes.
 
 
