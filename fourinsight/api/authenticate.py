@@ -138,7 +138,6 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
                 token = self.fetch_token()
             else:
                 log.debug("token in cache still valid")
-                print("Authentication from previous session still valid.")
 
         if self.token_updater:
             self.token_updater(token)
