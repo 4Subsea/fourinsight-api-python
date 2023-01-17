@@ -293,8 +293,7 @@ class Test_UserSession:
         with patch.object(authenticate.UserSession, "get") as mock_get:
 
             test_url = "myurl"
-            auth = authenticate.UserSession()
-            gen = auth.get_page(test_url)
+            gen = authenticate.UserSession().get_page(test_url)
             next(gen)
 
             mock_get.assert_called_once_with(test_url)
@@ -304,7 +303,7 @@ class Test_UserSession:
 
             test_url = "myurl"
             gen = authenticate.UserSession().get_page(test_url, b="True")
-            response = next(gen)
+            next(gen)
 
             mock_get.assert_called_once_with(test_url, b="True")
 
@@ -319,8 +318,7 @@ class Test_UserSession:
 
     def test_response_object(self, mock_token, mock_fetch, mock_refresh):
         with patch.object(authenticate.UserSession, "get") as mock_get:
-            auth = authenticate.UserSession()
-            gen = auth.get_page("myurl")
+            gen = authenticate.UserSession().get_page("myurl")
             assert inspect.isgenerator(gen)
 
     def test_init_force_auth(self, mock_token, mock_fetch, mock_refresh):
