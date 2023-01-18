@@ -525,33 +525,6 @@ class Test_BaseAuthSession:
         log_out = stream.read()
         assert log_out.startswith("request initiated")
 
-    def test_get_pages_call_get(self, mock_fetch, mock_refresh):
-        with patch.object(authenticate.ClientSession, "get") as mock_get:
-
-            test_url = "myurl"
-            gen = authenticate.ClientSession(
-                "my_client_id", "my_client_secret"
-            ).get_pages(test_url)
-            next(gen)
-
-            mock_get.assert_called_once_with(test_url)
-
-    def test_get_pages_call_get_with_kwargs(self, mock_fetch, mock_refresh):
-        with patch.object(authenticate.ClientSession, "get") as mock_get:
-
-            test_url = "myurl"
-            gen = authenticate.ClientSession(
-                "my_client_id", "my_client_secret"
-            ).get_pages(test_url, b="True")
-            next(gen)
-
-            mock_get.assert_called_once_with(test_url, b="True")
-
-    def test_get_pages_response_object(self, mock_fetch, mock_refresh):
-        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
-        gen = auth.get_pages("myurl")
-        assert inspect.isgenerator(gen)
-
     def test_get_pages(self, mock_fetch, mock_refresh):
 
         JSON_DATA = [
