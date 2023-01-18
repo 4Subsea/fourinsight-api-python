@@ -658,6 +658,34 @@ class Test_BaseAuthSession:
                 ]
             )
 
+    def test_get_pages_raises_json_list(self, mock_fetch, mock_refresh):
+
+        JSON_DATA = [
+            {
+                "a": "foo",
+                "b": "bar",
+                "c": "baz",
+            },
+            {
+                "a": "foobar",
+                "b": "baz",
+                "c": "test",
+            },
+        ]
+
+        mock_response = Mock()
+        mock_response.json.return_value = JSON_DATA
+
+        with patch.object(
+            authenticate.ClientSession, "get", return_value=mock_response
+        ):
+            session = authenticate.ClientSession("my_client_id", "my_client_secret")
+
+            pages = session.get_pages("foo/bar/baz", baz="foobar")
+
+            with pytest.raises(AttributeError):
+                next(pages)
+
 
 if __name__ == "__main__":
     pytest.main()
