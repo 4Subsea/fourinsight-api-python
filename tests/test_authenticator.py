@@ -604,6 +604,60 @@ class Test_BaseAuthSession:
                 ]
             )
 
+    def test_get_pages_last_nextlink_none(self, mock_fetch, mock_refresh):
+
+        JSON_DATA = [
+            {
+                "value": {"a": 0, "b": "foo", "c": "bar"},
+                "@odata.nextLink": "first/nextlink",
+            },
+            {
+                "value": [
+                    {"a": 123, "b": "baz", "c": "bar"},
+                    {"a": 456, "b": "foo", "c": "bar"},
+                ],
+                "@odata.nextLink": "second/nextlink",
+            },
+            {
+                "value": None,
+                "@odata.nextLink": "third/nextlink",
+            },
+            {
+                "value": {"a": 0, "b": "foo", "c": "bar"},
+                "@odata.nextLink": None,
+            },
+        ]
+
+        mock_response = Mock()
+        mock_response._n_calls = 0
+        mock_response.json.side_effect = lambda *args, **kwargs: JSON_DATA[
+            mock_response._n_calls - 1
+        ]
+
+        def get_side_effect(*args, **kwargs):
+            mock_response._n_calls += 1
+            return mock_response
+
+        with patch.object(
+            authenticate.ClientSession, "get", side_effect=get_side_effect
+        ) as mock_get:
+            session = authenticate.ClientSession("my_client_id", "my_client_secret")
+
+            pages = session.get_pages("foo/bar/baz", baz="foobar")
+
+            for i, page_i in enumerate(pages):
+                assert page_i.json() == JSON_DATA[i]
+                assert page_i is mock_response
+
+            mock_get.assert_has_calls(
+                [
+                    call("foo/bar/baz", baz="foobar"),
+                    call("first/nextlink", baz="foobar"),
+                    call("second/nextlink", baz="foobar"),
+                    call("third/nextlink", baz="foobar"),
+                ]
+            )
+
 
 if __name__ == "__main__":
     pytest.main()
