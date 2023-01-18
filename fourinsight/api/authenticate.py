@@ -15,9 +15,9 @@ from oauthlib.oauth2 import (
     WebApplicationClient,
 )
 from requests.adapters import HTTPAdapter
+from requests.exceptions import HTTPError
 from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
-from requests.exceptions import HTTPError
 
 import fourinsight.api as fapi
 
