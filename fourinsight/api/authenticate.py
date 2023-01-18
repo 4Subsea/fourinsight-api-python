@@ -234,11 +234,12 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
             response = self.get(url, **kwargs)
 
             try:
-                url = response.json().get("@odata.nextLink")
-            except AttributeError:
+                response.raise_for_status()
+            except HTTPError: 
                 url = None
-            finally:
-                yield response
+            else:
+                url = response.json().get("@odata.nextLink")
+            yield response
 
 
 class UserSession(BaseAuthSession):
