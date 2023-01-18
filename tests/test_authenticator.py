@@ -5,6 +5,7 @@ from io import StringIO
 from unittest.mock import MagicMock, Mock, call, patch
 
 import pytest
+from requests.exceptions import HTTPError
 
 import fourinsight.api as fapi
 from fourinsight.api import authenticate
@@ -684,6 +685,49 @@ class Test_BaseAuthSession:
             pages = session.get_pages("foo/bar/baz", baz="foobar")
 
             with pytest.raises(AttributeError):
+                next(pages)
+
+    def test_get_pages_raise_for_status(self, mock_fetch, mock_refresh):
+
+        JSON_DATA = [
+            {
+                "value": {"a": 0, "b": "foo", "c": "bar"},
+                "@odata.nextLink": "first/nextlink",
+            },
+            {
+                "value": [
+                    {"a": 123, "b": "baz", "c": "bar"},
+                    {"a": 456, "b": "foo", "c": "bar"},
+                ],
+                "@odata.nextLink": "second/nextlink",
+            },
+            {
+                "value": None,
+                "@odata.nextLink": "third/nextlink",
+            },
+            {
+                "value": {"a": 0, "b": "foo", "c": "bar"},
+                "@odata.nextLink": None,
+            },
+        ]
+
+        def side_effect(*args, **kwargs):
+            raise HTTPError()
+
+        mock_response = Mock()
+        mock_response.raise_for_status.side_effect = side_effect
+
+        with patch.object(
+            authenticate.ClientSession, "get", return_value=mock_response
+        ) as mock_get:
+            session = authenticate.ClientSession("my_client_id", "my_client_secret")
+
+            pages = session.get_pages("foo/bar/baz", baz="foobar")
+
+            assert next(pages) == mock_response
+            mock_response.raise_for_status.assert_called_once()
+
+            with pytest.raises(StopIteration):
                 next(pages)
 
 
