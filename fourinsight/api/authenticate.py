@@ -17,6 +17,7 @@ from oauthlib.oauth2 import (
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
+from requests.exceptions import HTTPError
 
 import fourinsight.api as fapi
 
@@ -235,7 +236,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
 
             try:
                 response.raise_for_status()
-            except HTTPError: 
+            except HTTPError:
                 url = None
             else:
                 url = response.json().get("@odata.nextLink")
