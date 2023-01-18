@@ -214,20 +214,21 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
     def get_pages(self, url, **kwargs):
         r"""
         Sends GET requests, and returns a generator that lets the user iterate over
-        paginated responses. If the endpoint does not support pagination, the full
-        response is returned.
+        paginated responses. Note that the endpoint must support OData; the json
+        response should include the a parameter '@odata.nextLink', providing the
+        URL for the next page.
 
         Parameters
         ----------
         url : str
-            API endpoint. To return pages, the endpoint must support odata and contain
+            API endpoint. To return pages, the endpoint must support OData and contain
             the parameter '@odata.nextLink'.
         **kwargs :
             Optional keyword arguments. Will be passed on to the ``get`` method.
 
         Yields
         ------
-        response : dict
+        response : obj
             The response as a :class:`Response` object.
         """
 
