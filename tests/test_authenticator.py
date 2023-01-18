@@ -711,24 +711,35 @@ class Test_BaseAuthSession:
             },
         ]
 
-        def side_effect(*args, **kwargs):
+        mock_response = Mock()
+        mock_response._n_calls = 0
+        mock_response.json.side_effect = lambda *args, **kwargs: JSON_DATA[
+            mock_response._n_calls - 1
+        ]
+
+        def raise_httperror(*args, **kwargs):
             raise HTTPError()
 
-        mock_response = Mock()
-        mock_response.raise_for_status.side_effect = side_effect
+        mock_response.raise_for_status.side_effect = raise_httperror
+
+        def get_side_effect(*args, **kwargs):
+            mock_response._n_calls += 1
+            return mock_response
 
         with patch.object(
-            authenticate.ClientSession, "get", return_value=mock_response
+            authenticate.ClientSession, "get", side_effect=get_side_effect
         ) as mock_get:
             session = authenticate.ClientSession("my_client_id", "my_client_secret")
 
             pages = session.get_pages("foo/bar/baz", baz="foobar")
 
-            assert next(pages) == mock_response
-            mock_response.raise_for_status.assert_called_once()
+            for i, page_i in enumerate(pages):
+                assert page_i.json() == JSON_DATA[i]
+                assert page_i is mock_response
 
-            with pytest.raises(StopIteration):
-                next(pages)
+            mock_get.assert_called_once_with("foo/bar/baz", baz="foobar")
+
+            mock_response.raise_for_status.assert_called_once()
 
 
 if __name__ == "__main__":
