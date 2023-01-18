@@ -593,6 +593,7 @@ class Test_BaseAuthSession:
 
             for i, page_i in enumerate(pages):
                 assert page_i.json() == JSON_DATA[i]
+                assert page_i is mock_response
 
             mock_get.assert_has_calls(
                 [
