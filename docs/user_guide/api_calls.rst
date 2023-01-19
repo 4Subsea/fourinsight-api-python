@@ -14,5 +14,5 @@ For the complete overview of available API calls see `4Insight REST API`_.
     response = session.get("/v1.0/Campaigns")
 
 
-.. _4Insight REST API: https://4insight.io/#/developer
+.. _4Insight REST API: https://4insight-api-prod.4subsea.net/swagger/index.html
 .. _4Insight.io: https://4insight.io
