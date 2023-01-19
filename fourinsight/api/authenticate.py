@@ -15,6 +15,7 @@ from oauthlib.oauth2 import (
     WebApplicationClient,
 )
 from requests.adapters import HTTPAdapter
+from requests.exceptions import HTTPError
 from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
 
@@ -212,35 +213,35 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
 
     def get_pages(self, url, **kwargs):
         r"""
-        Function that returns a generator that lets user iterate over paginated responses. If the endpoint does not support pagination, the full response is returned
+        Sends GET requests, and returns a generator that lets the user iterate over
+        paginated responses. Note that the endpoint must support OData; the json
+        response should include the a parameter '@odata.nextLink', providing the
+        URL for the next page.
 
         Parameters
         ----------
+        url : str
+            API endpoint. To return pages, the endpoint must support OData and contain
+            the parameter '@odata.nextLink'.
+        **kwargs :
+            Optional keyword arguments. Will be passed on to the ``get`` method.
 
-        url: string
-            API endpoint. To return pages, the endpoint must support odata and contain the parameter '@odata.nextLink']
-
-        **kwargs:
-            Optional arguments that ``session.get`` takes.
-
-
-        Returns
-        -------
-
-        response: generator
-            generator object that contains the response
-
+        Yields
+        ------
+        response : obj
+            The response as a :class:`Response` object.
         """
 
         while url:
             response = self.get(url, **kwargs)
 
             try:
-                url = response.json().get("@odata.nextLink")
-            except AttributeError:
+                response.raise_for_status()
+            except HTTPError:
                 url = None
-            finally:
-                yield response
+            else:
+                url = response.json().get("@odata.nextLink")
+            yield response
 
 
 class UserSession(BaseAuthSession):
