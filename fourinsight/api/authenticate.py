@@ -15,6 +15,7 @@ from oauthlib.oauth2 import (
     WebApplicationClient,
 )
 from requests.adapters import HTTPAdapter
+from requests.exceptions import HTTPError
 from requests.packages.urllib3 import Retry
 from requests_oauthlib import OAuth2Session
 
@@ -85,7 +86,7 @@ class TokenCache:
 
 
 class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
-    """
+    r"""
     Abstract class for authorized sessions.
 
     Parameters
@@ -101,7 +102,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         The provided dict is stored internally in '_session_params'.
     auth_force : bool, optional
         Force re-authenticating the session (default is False)
-    kwargs : keyword arguments
+    **kwargs : keyword arguments
         Keyword arguments passed on to ``requests_oauthlib.OAuth2Session``.
         Here, the mandatory parameters for the authentication client shall be
         provided.
@@ -209,6 +210,38 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         for key in self._defaults:
             kwargs.setdefault(key, self._defaults[key])
         return (method, url, *args[2:]), kwargs
+
+    def get_pages(self, url, **kwargs):
+        r"""
+        Sends GET requests, and returns a generator that lets the user iterate over
+        paginated responses. Note that the endpoint must support OData; the json
+        response should include the a parameter '@odata.nextLink', providing the
+        URL for the next page.
+
+        Parameters
+        ----------
+        url : str
+            API endpoint. To return pages, the endpoint must support OData and contain
+            the parameter '@odata.nextLink'.
+        **kwargs :
+            Optional keyword arguments. Will be passed on to the ``get`` method.
+
+        Yields
+        ------
+        response : obj
+            The response as a :class:`Response` object.
+        """
+
+        while url:
+            response = self.get(url, **kwargs)
+
+            try:
+                response.raise_for_status()
+            except HTTPError:
+                url = None
+            else:
+                url = response.json().get("@odata.nextLink")
+            yield response
 
 
 class UserSession(BaseAuthSession):
