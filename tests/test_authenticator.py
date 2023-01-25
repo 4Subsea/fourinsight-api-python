@@ -487,15 +487,70 @@ class Test_BaseAuthSession:
     #     )
     #     assert {"timeout": auth._defaults["timeout"], "other": "thing"} == kwargs_out
 
-    @patch("fourinsight.api.authenticate.OAuth2Session.request")
-    def test_request_relative_path(self, mock_request, mock_fetch, mock_refresh):
-        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
-        args = ("/v1.0/ding/dong",)
+    # @patch("fourinsight.api.authenticate.OAuth2Session.request")
+    # def test_request_relative_path(self, mock_request, mock_fetch, mock_refresh):
+    #     auth = authenticate.ClientSession("my_client_id", "my_client_secret")
+    #     args = ("/v1.0/ding/dong",)
 
-        auth.get(*args)
+    #     auth.get(*args)
+
+    #     mock_request.assert_called_with(
+    #         "GET", auth._api_base_url + args[0], allow_redirects=True, **auth._defaults
+    #     )
+
+    @patch("fourinsight.api.authenticate.OAuth2Session.request")
+    def test_request_check_default(self, mock_request, mock_fetch, mock_refresh):
+        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
+        args = ("https://api.4insight.io/v1.0/Campaigns",)
+        kwargs = {
+            "other": "thing",
+        }
+
+        auth.get(*args, **kwargs)
 
         mock_request.assert_called_with(
-            "GET", auth._api_base_url + args[0], allow_redirects=True, **auth._defaults
+            "GET",
+            "https://api.4insight.io/v1.0/Campaigns",
+            other="thing",
+            allow_redirects=True,
+            timeout = auth._defaults["timeout"]
+        )
+
+    @patch("fourinsight.api.authenticate.OAuth2Session.request")
+    def test_request_args(self, mock_request, mock_fetch, mock_refresh):
+        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
+        args = ("https://api.4insight.io/v1.0/Campaigns",)
+        kwargs = {"other": "thing"}
+
+        auth.get(*args, **kwargs)
+
+        mock_request.assert_called_with(
+            "GET",
+            "https://api.4insight.io/v1.0/Campaigns",
+            other="thing",
+            allow_redirects=True,
+            **auth._defaults
+        )
+
+    @patch("fourinsight.api.authenticate.OAuth2Session.request")
+    def test_request_args_none(self, mock_request, mock_fetch, mock_refresh):
+        auth = authenticate.ClientSession("my_client_id", "my_client_secret")
+        args = ()
+        kwargs = {
+            "url": "https://api.4insight.io/v1.0/Campaigns",
+            "other": "thing",
+            "another": "one",
+        }
+
+        auth.get(*args, **kwargs)
+
+        mock_request.assert_called_with(
+            "GET",
+            "https://api.4insight.io/v1.0/Campaigns",
+            other="thing",
+            another="one", 
+            allow_redirects=True,
+            **auth._defaults
         )
 
     @patch("fourinsight.api.authenticate.OAuth2Session.request")
