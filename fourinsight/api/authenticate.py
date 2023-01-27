@@ -9,11 +9,8 @@ try:
 except ImportError:
     from importlib_resources import read_text
 
-from oauthlib.oauth2 import (
-    BackendApplicationClient,
-    InvalidGrantError,
-    WebApplicationClient,
-)
+from oauthlib.oauth2 import (BackendApplicationClient, InvalidGrantError,
+                             WebApplicationClient)
 from requests.adapters import HTTPAdapter
 from requests.exceptions import HTTPError
 from requests.packages.urllib3 import Retry
@@ -191,26 +188,6 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
             kwargs.setdefault(key, self._defaults[key])
         response = super().request(*args, **kwargs)
         return response
-
-    # def _update_args_kwargs(self, args, kwargs):
-    #     """
-    #     Update args and kwargs before passing on to request.
-    #     """
-        # if not args:
-        #     method = kwargs.pop("method")
-        #     url = kwargs.pop("url")
-        # elif len(args) == 1:
-        #     method = args[0]
-        #     url = kwargs.pop("url")
-        # else:
-        #     method, url = args[:2]
-
-        # # if not url.startswith("https://"):
-        # #     url = self._api_base_url + url
-
-        # for key in self._defaults:
-        #     kwargs.setdefault(key, self._defaults[key])
-        # return args, kwargs
 
     def get_pages(self, url, **kwargs):
         r"""
