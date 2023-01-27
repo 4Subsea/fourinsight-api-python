@@ -184,7 +184,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
     @_request_logger
     def request(self, *args, **kwargs):
         """
-        Extend the ``requests_oauthlib.OAuth2Session.request`` method 
+        Extend the ``requests_oauthlib.OAuth2Session.request`` method
         to supply default arguments.
         """
         for key in self._defaults:

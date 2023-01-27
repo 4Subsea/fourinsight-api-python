@@ -440,7 +440,7 @@ class Test_BaseAuthSession:
             "https://api.4insight.io/v1.0/Campaigns",
             other="thing",
             allow_redirects=True,
-            timeout = auth._defaults["timeout"]
+            timeout=auth._defaults["timeout"],
         )
 
     @patch("fourinsight.api.authenticate.OAuth2Session.request")
@@ -456,7 +456,7 @@ class Test_BaseAuthSession:
             "https://api.4insight.io/v1.0/Campaigns",
             other="thing",
             allow_redirects=True,
-            **auth._defaults
+            **auth._defaults,
         )
 
     @patch("fourinsight.api.authenticate.OAuth2Session.request")
@@ -475,9 +475,9 @@ class Test_BaseAuthSession:
             "GET",
             "https://api.4insight.io/v1.0/Campaigns",
             other="thing",
-            another="one", 
+            another="one",
             allow_redirects=True,
-            **auth._defaults
+            **auth._defaults,
         )
 
     @patch("fourinsight.api.authenticate.OAuth2Session.request")
