@@ -18,7 +18,7 @@ For instance, outputing the log to ``stdout`` can be done in the following manne
     logger.addHandler(handler)
 
     session = UserSession()
-    response = session.get("/v1.0/Campaigns")
+    response = session.get("https://api.4insight.io/v1.1/Campaigns")
 
 
 If you require even more detailed logging, consider using loggers from
