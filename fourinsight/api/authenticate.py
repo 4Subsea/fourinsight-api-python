@@ -184,32 +184,13 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
     @_request_logger
     def request(self, *args, **kwargs):
         """
-        Extend the ``requests_oauthlib.OAuth2Session.request`` method to
-        allow relative urls and supply default arguments.
+        Extend the ``requests_oauthlib.OAuth2Session.request`` method
+        to supply default arguments.
         """
-        args, kwargs = self._update_args_kwargs(args, kwargs)
-        response = super().request(*args, **kwargs)
-        return response
-
-    def _update_args_kwargs(self, args, kwargs):
-        """
-        Update args and kwargs before passing on to request.
-        """
-        if not args:
-            method = kwargs.pop("method")
-            url = kwargs.pop("url")
-        elif len(args) == 1:
-            method = args[0]
-            url = kwargs.pop("url")
-        else:
-            method, url = args[:2]
-
-        if not url.startswith("https://"):
-            url = self._api_base_url + url
-
         for key in self._defaults:
             kwargs.setdefault(key, self._defaults[key])
-        return (method, url, *args[2:]), kwargs
+        response = super().request(*args, **kwargs)
+        return response
 
     def get_pages(self, url, **kwargs):
         r"""

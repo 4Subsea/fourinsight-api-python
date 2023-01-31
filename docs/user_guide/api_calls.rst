@@ -9,11 +9,6 @@ For the complete overview of available API calls see `4Insight REST API`_.
 
     response = session.get("https://api.4insight.io/v1.1/Campaigns")
 
-    # or with relative url
-
-    response = session.get("/v1.1/Campaigns")
-
-
 Some API endpoints support OData and have paging, which returns a limited number of responses per page. 
 For these endpoints, the ``get_pages`` method can be useful:
 
