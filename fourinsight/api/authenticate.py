@@ -12,6 +12,7 @@ except ImportError:
 from oauthlib.oauth2 import (
     BackendApplicationClient,
     InvalidGrantError,
+    MissingTokenError,
     WebApplicationClient,
 )
 from requests.adapters import HTTPAdapter
@@ -134,7 +135,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         else:
             try:
                 token = self.refresh_token()
-            except (KeyError, ValueError, InvalidGrantError):
+            except (KeyError, ValueError, InvalidGrantError, MissingTokenError):
                 log.debug("not able to refresh token")
                 token = self.fetch_token()
             else:
