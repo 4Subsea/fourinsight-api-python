@@ -32,7 +32,6 @@ def test_constants():
 @patch("fourinsight.api.authenticate.user_data_dir")
 class Test_TokenCache:
     def test_init_dir_doesnt_exists(self, mock_cache_dir, tmp_path):
-
         cache_dir = tmp_path / "cache_dir"
         mock_cache_dir.return_value = cache_dir
 
@@ -508,7 +507,6 @@ class Test_BaseAuthSession:
         assert log_out.startswith("request initiated")
 
     def test_get_pages(self, mock_fetch, mock_refresh):
-
         JSON_DATA = [
             {
                 "value": {"a": 0, "b": "foo", "c": "bar"},
@@ -561,7 +559,6 @@ class Test_BaseAuthSession:
             )
 
     def test_get_pages_last_nextlink_none(self, mock_fetch, mock_refresh):
-
         JSON_DATA = [
             {
                 "value": {"a": 0, "b": "foo", "c": "bar"},
@@ -615,7 +612,6 @@ class Test_BaseAuthSession:
             )
 
     def test_get_pages_raises_json_list(self, mock_fetch, mock_refresh):
-
         JSON_DATA = [
             {
                 "a": "foo",
@@ -643,7 +639,6 @@ class Test_BaseAuthSession:
                 next(pages)
 
     def test_get_pages_raise_for_status(self, mock_fetch, mock_refresh):
-
         JSON_DATA = [
             {
                 "value": {"a": 0, "b": "foo", "c": "bar"},
