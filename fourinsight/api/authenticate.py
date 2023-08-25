@@ -223,6 +223,7 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
                 url = None
             else:
                 url = response.json().get("@odata.nextLink")
+                kwargs = {}
             yield response
 
 
