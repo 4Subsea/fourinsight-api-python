@@ -552,9 +552,9 @@ class Test_BaseAuthSession:
             mock_get.assert_has_calls(
                 [
                     call("foo/bar/baz", baz="foobar"),
-                    call("first/nextlink", baz="foobar"),
-                    call("second/nextlink", baz="foobar"),
-                    call("third/nextlink", baz="foobar"),
+                    call("first/nextlink"),
+                    call("second/nextlink"),
+                    call("third/nextlink"),
                 ]
             )
 
@@ -605,9 +605,9 @@ class Test_BaseAuthSession:
             mock_get.assert_has_calls(
                 [
                     call("foo/bar/baz", baz="foobar"),
-                    call("first/nextlink", baz="foobar"),
-                    call("second/nextlink", baz="foobar"),
-                    call("third/nextlink", baz="foobar"),
+                    call("first/nextlink"),
+                    call("second/nextlink"),
+                    call("third/nextlink"),
                 ]
             )
 
