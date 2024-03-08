@@ -2,6 +2,7 @@
 This code was taken from https://github.com/ActiveState/appdirs (v1.4.4) and
 modified to suit our purposes.
 """
+
 import os
 import sys
 
