@@ -193,6 +193,18 @@ class BaseAuthSession(OAuth2Session, metaclass=ABCMeta):
         response = super().request(*args, **kwargs)
         return response
 
+    def get(self, *args, **kwargs):
+        """
+        Extend the ``requests_oauthlib.OAuth2Session.get`` method
+        to ensure that internal API are not accessed.
+        """
+        url = args[0] if args else kwargs.get("url", None)
+        if "internal" in url:
+            raise ValueError(
+                "The Internal API is exclusively intended for internal use within 4insight. If you require access to the internal API, kindly reach out to 4insight support."
+            )
+        return super().get(*args, **kwargs)
+
     def get_pages(self, url, **kwargs):
         r"""
         Sends GET requests, and returns a generator that lets the user iterate over
