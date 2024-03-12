@@ -337,6 +337,7 @@ class ClientSession(BaseAuthSession):
         client = BackendApplicationClient(self._client_id)
         super().__init__(
             client,
+            scope = self._scope,
             auth_force=True,
             auto_refresh_url=self._token_url,
             # unable to supress TokenUpdated expection without this dummy updater
