@@ -45,6 +45,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.linkcode",
     "myst_parser",
+    "sphinxcontrib.video",
 ]
 
 
