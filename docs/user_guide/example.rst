@@ -1,12 +1,12 @@
 Use case example
 ================
 
-Here are two simple example on how you can use the API endpoints to access data. The first example demonstrates how to find all instruments associated with a field, and the second example demonstrates how to find all risers with a specified length and sort them by field.
+Here are two simple examples showing how you can use the API endpoints to access data. The first example demonstrates how to find all instruments associated with a field, and the second example demonstrates how to find all risers with a specified length and sort them by field.
 
 To build your own application using your desired API endpoints, you can find a complete overview of the available API endpoints in the `4insight REST API`_ documentation.
 
 .. caution::
-    Do not utilize the INTERNAL API endpoints. You can however use the endpoints from version 1.0, 1.1 and 1.2.
+    Do not use the INTERNAL API endpoints. You can however use the endpoints from version 1.0, 1.1 and 1.2.
 
 .. code-block:: python
     
