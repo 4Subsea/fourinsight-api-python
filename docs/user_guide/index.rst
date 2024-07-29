@@ -18,3 +18,4 @@ User Guide
    api_calls
    logging
    developer
+   example
