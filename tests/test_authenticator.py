@@ -437,6 +437,7 @@ class Test_BaseAuthSession:
         mock_request.assert_called_with(
             "GET",
             "https://api.4insight.io/v1.0/Campaigns",
+            params=None,
             other="thing",
             allow_redirects=True,
             timeout=auth._defaults["timeout"],
@@ -453,6 +454,7 @@ class Test_BaseAuthSession:
         mock_request.assert_called_with(
             "GET",
             "https://api.4insight.io/v1.0/Campaigns",
+            params=None,
             other="thing",
             allow_redirects=True,
             **auth._defaults,
@@ -473,6 +475,7 @@ class Test_BaseAuthSession:
         mock_request.assert_called_with(
             "GET",
             "https://api.4insight.io/v1.0/Campaigns",
+            params=None,
             other="thing",
             another="one",
             allow_redirects=True,
@@ -487,7 +490,7 @@ class Test_BaseAuthSession:
         auth.get(*args)
 
         mock_request.assert_called_with(
-            "GET", args[0], allow_redirects=True, **auth._defaults
+            "GET", args[0], params=None, allow_redirects=True, **auth._defaults
         )
 
     @patch("fourinsight.api.authenticate.OAuth2Session.request")
