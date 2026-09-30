@@ -4,7 +4,7 @@
 Support
 =======
 For bug/issue reports, please submit as issue on `GitHub`_. For questions and feedback contact
-us at support@4subsea.com
+us at 4insightsupport@4subsea.com
 
 .. _GitHub: https://github.com/4subsea/fourinsight-api-python
 
